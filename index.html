@@ -236,6 +236,34 @@ html.lenis{scroll-behavior:auto!important}
 .bub::after{content:"";position:absolute;left:18px;bottom:-9px;width:13px;height:13px;background:var(--c);border:3px solid #fff;border-top:0;border-left:0;transform:rotate(45deg)}
 .bub.r::after{left:auto;right:18px}
 .stk{display:block;width:68px;height:68px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.16))}
+/* per-photo special effects (particles are built by JS, animated by CSS) */
+.chipc{z-index:3}
+.fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.fx i,.fx b{position:absolute;display:block;animation-play-state:paused}
+.fx-on .fx i,.fx-on .fx b{animation-play-state:running}
+.p-steam,.p-smoke{left:var(--x);top:var(--y);width:var(--s);height:calc(var(--s)*1.8);margin-left:calc(var(--s)/-2);border-radius:50%;opacity:0;filter:blur(7px);background:radial-gradient(closest-side,rgba(255,255,255,.8),rgba(255,255,255,0));animation:fxSteam var(--d) ease-out var(--dl) infinite}
+.p-smoke{filter:blur(11px);background:radial-gradient(closest-side,rgba(238,238,242,.75),rgba(238,238,242,0));animation-name:fxSmoke}
+@keyframes fxSteam{0%{opacity:0;transform:translate(0,0) scale(.55)}20%{opacity:.9}100%{opacity:0;transform:translate(var(--dx),-110px) scale(1.7)}}
+@keyframes fxSmoke{0%{opacity:0;transform:translate(0,0) scale(.6)}18%{opacity:.85}60%{opacity:.5}100%{opacity:0;transform:translate(calc(var(--dx)*2),-190px) scale(2.2)}}
+.p-embers{left:var(--x);top:var(--y);width:calc(var(--s)*.45);height:calc(var(--s)*.45);border-radius:50%;background:#ffc15e;box-shadow:0 0 8px 2px rgba(255,140,40,.9);opacity:0;animation:fxEmber var(--d) ease-out var(--dl) infinite}
+@keyframes fxEmber{0%{opacity:0;transform:translate(0,0) scale(1)}12%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-150px) scale(.2)}}
+.p-speed{left:-30%;top:var(--y);width:calc(var(--s)*5);height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.95));opacity:0;animation:fxSpeed var(--d) linear var(--dl) infinite}
+@keyframes fxSpeed{0%{opacity:0;transform:translateX(0)}8%{opacity:1}30%{opacity:0;transform:translateX(620%)}100%{opacity:0;transform:translateX(620%)}}
+.p-glint,.p-stars{left:var(--x);top:var(--y);width:var(--s);height:var(--s);margin:calc(var(--s)/-2) 0 0 calc(var(--s)/-2);opacity:0;background:linear-gradient(#fff,#fff) center/100% 2px no-repeat,linear-gradient(#fff,#fff) center/2px 100% no-repeat;filter:drop-shadow(0 0 5px #fff);animation:fxTwinkle var(--d) ease-in-out var(--dl) infinite}
+.p-stars{background:linear-gradient(#fff3c4,#fff3c4) center/100% 1.5px no-repeat,linear-gradient(#fff3c4,#fff3c4) center/1.5px 100% no-repeat}
+@keyframes fxTwinkle{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+.fx-rays{left:-40%;top:-20%;width:34%;height:150%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.3),rgba(255,255,255,0));transform:rotate(16deg);filter:blur(3px);animation:fxRays 8s ease-in-out infinite}
+@keyframes fxRays{0%{transform:translateX(0) rotate(16deg);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(420%) rotate(16deg);opacity:0}}
+.p-mist{left:var(--x);top:var(--y);width:calc(var(--s)*8);height:calc(var(--s)*3);margin-left:calc(var(--s)*-4);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,0));filter:blur(16px);opacity:.9;animation:fxMist var(--d) ease-in-out var(--dl) infinite alternate}
+@keyframes fxMist{from{transform:translateX(-14%)}to{transform:translateX(18%)}}
+.p-drops{left:var(--x);top:var(--y);width:2px;height:calc(var(--s)*.8);background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,.9));opacity:0;animation:fxDrop var(--d) linear var(--dl) infinite}
+@keyframes fxDrop{0%{opacity:0;transform:translateY(0)}15%{opacity:.9}100%{opacity:0;transform:translateY(130px)}}
+.p-dust{left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:rgba(255,255,255,.9);filter:blur(.6px);opacity:0;animation:fxDust var(--d) ease-in-out var(--dl) infinite}
+@keyframes fxDust{0%{opacity:0;transform:translate(0,0)}25%{opacity:.85}75%{opacity:.6}100%{opacity:0;transform:translate(var(--dx),-40px)}}
+.fx-glow{inset:0;background:radial-gradient(60% 50% at 50% 75%,rgba(255,150,50,.45),rgba(255,150,50,0));mix-blend-mode:screen;animation:fxFlicker 2.4s ease-in-out infinite}
+@keyframes fxFlicker{0%,100%{opacity:.55}30%{opacity:.95}55%{opacity:.6}75%{opacity:1}}
+html.no-motion .fx{display:none}
+
 /* motion is ON by default (even if the OS has animations turned off); the visitor can switch it off with the button */
 html.no-motion{scroll-behavior:auto}
 html.no-motion.js .rv{opacity:1;transform:none;transition:none}
@@ -814,6 +842,55 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   var par=$$('.mosaic figure img,.card .ph img,.night .ph img,.cover-photo img');
   var vh=innerHeight, vw=innerWidth, last=-1;
 
+  /* per-photo effects: [type, x from%, x to%, y from%, y to%, count]; y is where the effect starts (it then rises/falls from there) */
+  var FX={
+    'cover-lake':[['mist',0,100,30,60,3],['glint',8,95,58,92,10]],
+    'pungsuwon-out':[['rays']],
+    'pungsuwon-in':[['dust',10,90,15,80,12]],
+    'jieun-tofu':[['steam',30,70,38,55,6]],
+    'jieun-stew':[['steam',25,75,40,60,8]],
+    'laonia-grill':[['smoke',20,80,45,70,7],['embers',20,80,45,75,8]],
+    'laonia-meat':[['steam',25,75,35,62,5]],
+    'laonia-sign':[['glint',5,95,5,95,6]],
+    'morak-bun':[['steam',15,85,28,58,9]],
+    'morak-make':[['dust',10,90,10,80,12]],
+    'luge-hero':[['speed',0,100,55,92,6]],
+    'luge-ride':[['speed',0,100,45,92,6]],
+    'luge-line':[['speed',0,100,50,92,4]],
+    'taipei-in':[['dust',10,90,10,80,10]],
+    'hosu133-garden':[['dust',10,90,10,80,10]],
+    'cottage-out':[['glint',10,90,10,70,5]],
+    'pension-night':[['stars',5,95,2,38,16]],
+    'pension-tent':[['stars',5,95,2,38,12]],
+    'pension-fire':[['glow'],['embers',25,75,50,88,14]],
+    'hosu-bench':[['glint',5,95,40,88,9]],
+    'hosu-walk':[['dust',10,90,15,80,8]],
+    'hosu-art':[['glint',5,95,45,92,7]],
+    'sanilio-aerial':[['drops',55,100,25,70,10]],
+    'most-out':[['glint',10,90,5,48,5]]
+  };
+  var DEF={steam:7,smoke:7,embers:12,speed:5,glint:6,stars:14,mist:3,drops:10,dust:10};
+  var DUR={steam:[3.2,5.2],smoke:[4.5,7],embers:[2.2,4],speed:[2.2,4.5],glint:[3,6],stars:[2,4],mist:[16,26],drops:[1.4,2.4],dust:[7,13]};
+  var SZ={steam:[22,44],smoke:[34,60],embers:[6,11],speed:[20,34],glint:[14,26],stars:[8,14],mist:[30,50],drops:[14,26],dust:[3,6]};
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  par.forEach(function(img){
+    var key=(img.getAttribute('src')||'').replace(/^.*\//,'').replace(/\.\w+$/,''), cfg=FX[key];
+    if(!cfg)return;
+    var host=img.parentNode, fx=document.createElement('div'); fx.className='fx'; fx.setAttribute('aria-hidden','true');
+    cfg.forEach(function(c){
+      var t=c[0];
+      if(t==='glow'||t==='rays'){var e=document.createElement('b');e.className='fx-'+t;fx.appendChild(e);return}
+      var n=c[5]||DEF[t];
+      for(var k=0;k<n;k++){
+        var p=document.createElement('i'), d=rnd(DUR[t][0],DUR[t][1]);
+        p.className='p-'+t;
+        p.style.cssText='--x:'+rnd(c[1],c[2]).toFixed(1)+'%;--y:'+rnd(c[3],c[4]).toFixed(1)+'%;--s:'+rnd(SZ[t][0],SZ[t][1]).toFixed(0)+'px;--d:'+d.toFixed(2)+'s;--dl:-'+(Math.random()*d).toFixed(2)+'s;--dx:'+rnd(-24,24).toFixed(0)+'px';
+        fx.appendChild(p);
+      }
+    });
+    host.appendChild(fx);
+  });
+
   /* 움직임 끄기 / 켜기 button */
   var btn=document.getElementById('motionToggle');
   function applyMotion(){
@@ -853,7 +930,9 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
       });
       par.forEach(function(img){
         var r=img.parentNode.getBoundingClientRect();
-        if(r.bottom<-150||r.top>vh+150)return;
+        var onscreen=!(r.bottom<-150||r.top>vh+150);
+        img.parentNode.classList.toggle('fx-on',onscreen); /* effects only run while the photo is near the screen */
+        if(!onscreen)return;
         var p=clamp(((r.top+r.height/2)-vh/2)/(vh/2+r.height/2),-1,1);
         var amp=img.closest('.cover-photo')?40:22;
         img.style.setProperty('--py',(-p*amp).toFixed(1)+'px');
