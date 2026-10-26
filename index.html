@@ -239,7 +239,7 @@ html.lenis{scroll-behavior:auto!important}
 .pop.flip .bub::after{left:auto;right:18px}
 .ic{display:block;width:78px;height:78px;filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 8px 9px rgba(0,0,0,.22))}
 .pop-row{display:flex;align-items:flex-end}
-.pop-row .bub.sm{margin:0 0 6px -8px;font-size:13px;padding:6px 12px}
+.pop-row .bub.sm{margin:0 0 6px -10px;font-size:14px;padding:7px 13px;font-weight:800}
 .pop-row .bub::after{display:none}
 .burst{position:absolute;left:50%;top:50%;width:0;height:0}
 .burst i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--c,#ffd84d);opacity:0}
@@ -948,38 +948,39 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
     star:'<svg class="ic" viewBox="0 0 64 64"><path d="M32 3l8.5 17.5 19.2 2.6-14 13.4 3.5 19.1L32 46.5 14.8 55.6l3.5-19.1-14-13.4 19.2-2.6z" fill="#ffd84d"/><circle cx="26" cy="32" r="2.2" fill="#1d1d1f"/><circle cx="38" cy="32" r="2.2" fill="#1d1d1f"/><path d="M28 38q4 3 8 0" fill="none" stroke="#1d1d1f" stroke-width="2.2" stroke-linecap="round"/></svg>',
     drop:'<svg class="ic" viewBox="0 0 64 64"><path d="M32 4C32 4 11 29 11 42a21 21 0 0 0 42 0C53 29 32 4 32 4z" fill="#8fd0ff"/><path d="M22 40q0 8 7 11" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".85"/></svg>'
   };
-  /* ic = illustration, t = optional little speech bubble next to it, c = burst colour, r = tilt */
+  /* ic = illustration, t = short onomatopoeia / mimetic word + a current slang phrase, c = burst colour, r = tilt */
   var POP={
-    'cover-lake':{ic:'sun',c:'#ffd23f',r:8},
-    'pungsuwon-out':{ic:'camera',t:'찰칵!',c:'#8fd0ff',r:-6},
-    'pungsuwon-in':{ic:'bell',c:'#ffd84d',r:5},
-    'jieun-tofu':{ic:'tofu',t:'호호~ 뜨거워!',c:'#ffd84d',r:-5},
-    'jieun-out':{ic:'pin',c:'#ff7a7a',r:4},
-    'jieun-stew':{ic:'pot',c:'#ff8f8f',r:6},
-    'luge-hero':{ic:'bolt',t:'슝~!!',c:'#ffd84d',r:-6},
-    'luge-ride':{ic:'helmet',c:'#ff9d4d',r:5},
-    'luge-line':{ic:'flag',c:'#8fd0ff',r:-4},
-    'mart-out':{ic:'cart',c:'#8fe6c9',r:4},
-    'taipei-in':{ic:'boba',c:'#ffb3d9',r:-5},
-    'hosu133-garden':{ic:'flower',c:'#ffb3d9',r:5},
-    'cottage-out':{ic:'coffee',c:'#ffb877',r:-4},
-    'pension-day':{ic:'house',c:'#ff9d9d',r:5},
-    'pension-night':{ic:'moon',c:'#ffd84d',r:-5},
-    'pension-tent':{ic:'tent',c:'#ff9d4d',r:4},
-    'pension-fire':{ic:'flame',t:'불멍 ON',c:'#ff7a2e',r:-6},
-    'pension-room':{ic:'bed',c:'#8fe6c9',r:5},
-    'hosu-bench':{ic:'butterfly',c:'#ff9d4d',r:-5},
-    'hosu-walk':{ic:'tree',t:'수다 떨며 걷기',c:'#6fcf97',r:4},
-    'hosu-art':{ic:'heart',c:'#ff7aa8',r:-4},
-    'laonia-sign':{ic:'infinity',c:'#ffd84d',r:5},
-    'laonia-grill':{ic:'smoke',c:'#dfe4ec',r:-5},
-    'laonia-meat':{ic:'cow',t:'한우 최고!',c:'#ffb3b3',r:4},
-    'morak-bun':{ic:'bun',c:'#ffe6b8',r:-6},
-    'morak-bldg':{ic:'star',c:'#ffd84d',r:5},
-    'morak-make':{ic:'pin2',c:'#ecd0a2',r:-4},
-    'sanilio-aerial':{ic:'drop',c:'#8fd0ff',r:6},
-    'most-out':{ic:'cloud',c:'#d6ecff',r:-5}
+    'cover-lake':{ic:'sun',t:'느좋 그 자체',c:'#ffd23f',r:8},
+    'pungsuwon-out':{ic:'camera',t:'찰칵! 인생샷 각',c:'#8fd0ff',r:-6},
+    'pungsuwon-in':{ic:'bell',t:'댕~ 댕~ 평온',c:'#ffd84d',r:5},
+    'jieun-tofu':{ic:'tofu',t:'호호~ 뜨끈뜨끈',c:'#ffd84d',r:-5},
+    'jieun-out':{ic:'pin',t:'찐맛집 발견!',c:'#ff7a7a',r:4},
+    'jieun-stew':{ic:'pot',t:'보글보글 얼큰~',c:'#ff8f8f',r:6},
+    'luge-hero':{ic:'bolt',t:'슝~ 도파민 ON',c:'#ffd84d',r:-6},
+    'luge-ride':{ic:'helmet',t:'꺄아악~ 찢었다',c:'#ff9d4d',r:5},
+    'luge-line':{ic:'flag',t:'누가 1등? 중꺾마',c:'#8fd0ff',r:-4},
+    'mart-out':{ic:'cart',t:'장바구니 플렉스',c:'#8fe6c9',r:4},
+    'taipei-in':{ic:'boba',t:'쪼르륵~ 당 충전',c:'#ffb3d9',r:-5},
+    'hosu133-garden':{ic:'flower',t:'살랑살랑 꾸안꾸',c:'#ffb3d9',r:5},
+    'cottage-out':{ic:'coffee',t:'모락모락 커피각',c:'#ffb877',r:-4},
+    'pension-day':{ic:'house',t:'도착~ 퇴근각!',c:'#ff9d9d',r:5},
+    'pension-night':{ic:'moon',t:'반짝반짝 별멍',c:'#ffd84d',r:-5},
+    'pension-tent':{ic:'tent',t:'지글지글 고기각',c:'#ff9d4d',r:4},
+    'pension-fire':{ic:'flame',t:'타닥타닥 불멍 ON',c:'#ff7a2e',r:-6},
+    'pension-room':{ic:'bed',t:'쿨쿨~ 꿀잠각',c:'#8fe6c9',r:5},
+    'hosu-bench':{ic:'butterfly',t:'나풀나풀 느좋',c:'#ff9d4d',r:-5},
+    'hosu-walk':{ic:'tree',t:'사부작사부작 수다',c:'#6fcf97',r:4},
+    'hosu-art':{ic:'heart',t:'두근두근 인생샷',c:'#ff7aa8',r:-4},
+    'laonia-sign':{ic:'infinity',t:'무한리필 레전드',c:'#ffd84d',r:5},
+    'laonia-grill':{ic:'smoke',t:'치이익~ 고기각',c:'#dfe4ec',r:-5},
+    'laonia-meat':{ic:'cow',t:'냠냠 한우 찢었다',c:'#ffb3b3',r:4},
+    'morak-bun':{ic:'bun',t:'모락모락 쫀득',c:'#ffe6b8',r:-6},
+    'morak-bldg':{ic:'star',t:'찐빵 마을 핫플',c:'#ffd84d',r:5},
+    'morak-make':{ic:'pin2',t:'조물조물 갓생',c:'#ecd0a2',r:-4},
+    'sanilio-aerial':{ic:'drop',t:'쏴아~ 뷰 맛집',c:'#8fd0ff',r:6},
+    'most-out':{ic:'cloud',t:'둥실둥실 분위기 맛집',c:'#d6ecff',r:-5}
   };
+  var PAL=['#ffd84d','#8fd0ff','#ff9d9d','#8fe6c9','#ffb877','#cbbcff','#ffb3d9'];
   var pops=document.createElement('div'); pops.className='pops'; pops.setAttribute('aria-hidden','true'); document.body.appendChild(pops);
   var mapped=[];
   function popFor(host,spec){
@@ -987,7 +988,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
     var el=document.createElement('div'); el.className='pop';
     el.style.setProperty('--r',(spec.r||0)+'deg'); el.style.setProperty('--c',spec.c||'#ffd84d');
     var inner=IC[spec.ic]||'';
-    if(spec.t)inner='<span class="pop-row">'+inner+'<span class="bub sm" style="--c:#fff">'+spec.t+'</span></span>';
+    if(spec.t)inner='<span class="pop-row">'+inner+'<span class="bub sm" style="--c:'+PAL[(spec._i||0)%PAL.length]+'">'+spec.t+'</span></span>';
     var burst=''; for(var i=0;i<8;i++)burst+='<i style="--a:'+(i*45)+'deg"></i>';
     el.innerHTML='<span class="pop-in">'+inner+'</span><span class="burst">'+burst+'</span>';
     pops.appendChild(el); host._pop=el; return el;
@@ -1011,7 +1012,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   }
   par.forEach(function(img){
     var key=(img.getAttribute('src')||'').replace(/^.*\//,'').replace(/\.\w+$/,''), spec=POP[key];
-    if(spec)mapped.push({host:img.parentNode,spec:spec});
+    if(spec){spec._i=mapped.length;mapped.push({host:img.parentNode,spec:spec})}
   });
   /* a sticker is on while its photo sits in the middle band of the screen; at most 3 at once (the ones closest to the centre) */
   function tickPops(){
@@ -1023,7 +1024,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
       if(ov>Math.min(120,r.height*.5))c.push({h:m.host,d:Math.abs((r.top+r.bottom)/2-vh/2)});
     });
     c.sort(function(a,b){return a.d-b.d});
-    var keep=c.slice(0,3).map(function(x){return x.h});
+    var keep=c.slice(0,vw<734?2:3).map(function(x){return x.h});
     mapped.forEach(function(m){
       var on=keep.indexOf(m.host)>=0;
       if(on&&!m.host._on)showPop(m);
