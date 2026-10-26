@@ -236,13 +236,15 @@ html.lenis{scroll-behavior:auto!important}
 .bub::after{content:"";position:absolute;left:18px;bottom:-9px;width:13px;height:13px;background:var(--c);border:3px solid #fff;border-top:0;border-left:0;transform:rotate(45deg)}
 .bub.r::after{left:auto;right:18px}
 .stk{display:block;width:68px;height:68px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.16))}
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .js .rv{opacity:1;transform:none;transition:none}
-  .floaters{display:none}
-  .mosaic figure img,.card .ph img,.night .ph img,.cover-photo img{transform:none;will-change:auto}
-}
-@media print{.floaters{display:none}}
+/* motion is ON by default (even if the OS has animations turned off); the visitor can switch it off with the button */
+html.no-motion{scroll-behavior:auto}
+html.no-motion.js .rv{opacity:1;transform:none;transition:none}
+html.no-motion .floaters{display:none}
+html.no-motion .mosaic figure img,html.no-motion .card .ph img,html.no-motion .night .ph img,html.no-motion .cover-photo img{transform:none;will-change:auto}
+html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
+.motion-toggle{position:fixed;z-index:45;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));font:inherit;font-size:12px;font-weight:600;letter-spacing:-.01em;color:#fff;background:rgba(29,29,31,.78);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border:0;border-radius:var(--r-pill);padding:9px 14px;cursor:pointer;transition:transform .15s}
+.motion-toggle:active{transform:scale(.95)}
+@media print{.floaters,.motion-toggle{display:none}}
 
 /* ─────────────  responsive  ───────────── */
 @media (max-width:1068px){
@@ -782,11 +784,14 @@ html.lenis{scroll-behavior:auto!important}
   <div class="fl hide-m" data-x="6" data-y="36" data-s=".50"><span class="bob" style="--r:-3deg;--t:5.5s"><span class="bub" style="--c:#8fe6c9">찰칵!</span></span></div>
 </div>
 
+<button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false">움직임 끄기</button>
+
 <script src="assets/lenis.min.js"></script>
 <script>
 /* smooth scroll + scroll-linked motion + floating stickers */
 (function(){
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* "reduce" = the visitor pressed the 움직임 끄기 button. The OS animation setting is NOT used, so the effects show by default. */
+  var reduce=false; try{reduce=localStorage.getItem('gipa-motion')==='off'}catch(e){}
   var $$=function(s){return [].slice.call(document.querySelectorAll(s))};
   var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
 
@@ -796,9 +801,8 @@ html.lenis{scroll-behavior:auto!important}
   $$('.dayhead .big').forEach(function(b){b.classList.remove('rv')});
 
   var lenis=null;
-  if(!reduce&&window.Lenis){
-    lenis=new Lenis({duration:1.15,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true});
-  }
+  function makeLenis(){return new Lenis({duration:1.15,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},smoothWheel:true})}
+  if(!reduce&&window.Lenis){lenis=makeLenis()}
   document.addEventListener('click',function(e){
     if(!lenis)return;
     var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a)return;
@@ -807,8 +811,27 @@ html.lenis{scroll-behavior:auto!important}
   });
 
   var nav=document.querySelector('.gnav'), fl=$$('.fl'), heads=$$('.dayhead'), FR=[.5,.5,.25,.8,.6,.3,.7,.4];
-  var par=reduce?[]:$$('.mosaic figure img,.card .ph img,.night .ph img,.cover-photo img');
+  var par=$$('.mosaic figure img,.card .ph img,.night .ph img,.cover-photo img');
   var vh=innerHeight, vw=innerWidth, last=-1;
+
+  /* 움직임 끄기 / 켜기 button */
+  var btn=document.getElementById('motionToggle');
+  function applyMotion(){
+    document.documentElement.classList.toggle('no-motion',reduce);
+    btn.textContent=reduce?'움직임 켜기':'움직임 끄기';
+    btn.setAttribute('aria-pressed',reduce?'true':'false');
+    if(reduce){
+      if(lenis){lenis.destroy();lenis=null}
+      par.forEach(function(i){i.style.removeProperty('--py')});
+      heads.forEach(function(h){var b=h.querySelector('.big');if(b){b.style.transform='';b.style.opacity=''}});
+    }else if(!lenis&&window.Lenis){lenis=makeLenis()}
+    last=-1;
+  }
+  btn.addEventListener('click',function(){
+    reduce=!reduce; try{localStorage.setItem('gipa-motion',reduce?'off':'on')}catch(e){}
+    applyMotion();
+  });
+  applyMotion();
 
   function update(sy){
     var max=document.documentElement.scrollHeight-vh;
