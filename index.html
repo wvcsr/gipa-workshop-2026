@@ -10,7 +10,7 @@ try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(loca
 <script>
 /* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
    Bump SITE_VERSION here AND in version.json on every publish. */
-(function(){var SITE_VERSION='20261026d';
+(function(){var SITE_VERSION='20261026e';
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.v||j.v===SITE_VERSION)return;
   var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
@@ -1064,9 +1064,16 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   function placePop(host){
     var el=host._pop; if(!el)return;
     var r=host.getBoundingClientRect();
-    var w=el.offsetWidth, h=el.offsetHeight, flip=r.right+w*.45>vw-8;
+    var w=el.offsetWidth, h=el.offsetHeight, x, y, flip;
+    if(host._inCard===undefined)host._inCard=!!host.closest('.night, .cards'); /* photos inside text cards */
+    if(host._inCard){
+      /* stay on top of its own photo: never cover the neighbouring card's text */
+      flip=false; x=Math.max(r.left+6,r.right-w-10); y=r.top+10;
+    }else{
+      flip=r.right+w*.45>vw-8;
+      x=flip?r.left-w*.55:r.right-w*.45; y=r.top-h*.5;
+    }
     el.classList.toggle('flip',flip);
-    var x=flip?r.left-w*.55:r.right-w*.45, y=r.top-h*.5;
     x=clamp(x,8,vw-w-8); y=clamp(y,56,vh-h-8);
     el.style.transform='translate3d('+x.toFixed(0)+'px,'+y.toFixed(0)+'px,0)';
   }
