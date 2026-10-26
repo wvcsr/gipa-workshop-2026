@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* always start at the top: no scroll restoration on refresh / back, and drop any #hash from the address */
+try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(location.hash)history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+</script>
 <title>Giup-Heartnership Team Workshop</title>
 <meta name="description" content="기업파트너십팀 2026 하반기 워크샵 안내서 — 2026.11.12(목)–11.13(금), 강원 횡성">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -345,6 +349,71 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   .ov li .th{width:40px;height:40px}
   .ov .d{padding:22px 18px 8px}
 }
+
+/* ───────────── mobile polish ───────────── */
+:root{--gx:22px}
+@media (max-width:833px){:root{--gx:20px}}
+/* respect the notch / rounded corners on phones held sideways */
+.tile,.cover,.dayhead,footer{padding-left:max(var(--gx),env(safe-area-inset-left,0px));padding-right:max(var(--gx),env(safe-area-inset-right,0px))}
+.gnav .in{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* touch-size controls + lighter effects: portrait phones and short (sideways) screens */
+@media (max-width:734px), (orientation:landscape) and (max-height:520px){
+  .gnav nav a{display:block;padding:13px 0}
+  .motion-toggle{min-height:44px;padding:0 16px;display:flex;align-items:center}
+  .heal i{font-size:12px}
+  .fx i:nth-child(even){display:none}   /* half the particles: lighter on phones */
+  .eyebrow{font-size:13px}
+  .facts dt{font-size:12px}
+  .strip .n{font-size:19px}
+  .card .tl,.facts a{display:inline-block;padding:6px 0}
+}
+
+/* phones held sideways (short screens): tighter vertical rhythm, everything sized by screen height */
+@media (orientation:landscape) and (max-height:520px){
+  html{scroll-padding-top:44px}
+  .tile{padding-top:44px;padding-bottom:44px}
+  .tile.slim{padding-top:26px;padding-bottom:26px}
+  .cover{padding-top:30px;padding-bottom:22px}
+  .cover h1{font-size:clamp(34px,15vh,84px);margin-top:10px}
+  .cover h1 br{display:none}
+  .cover .tag{font-size:clamp(18px,6vh,26px);margin-top:10px}
+  .cover .when{margin-top:8px;font-size:14px}
+  .cover .btns{margin-top:16px}
+  .cover-photo{height:clamp(150px,44vh,260px)}
+  .dayhead{padding-top:44px;padding-bottom:40px}
+  .dayhead .big{font-size:clamp(64px,36vh,150px)}
+  .dayhead .date{margin-top:8px}
+  .dayhead .tagline{margin-top:10px;font-size:18px}
+  .route{margin-top:20px}
+  h2.stop{font-size:clamp(28px,9vh,44px);margin-top:8px}
+  .lead{font-size:17px;margin-top:10px}
+  .heal{margin-top:14px}
+  .mosaic{margin-top:28px}
+  .m-a{height:min(76vh,420px)}
+  .m-b,.m-b.rev{height:min(66vh,340px)}
+  .m-c,.m-s{height:min(58vh,280px)}
+  .m-w{grid-template-rows:min(44vh,230px) min(28vh,140px)}
+  .mosaic figure[style*="height"]{height:min(62vh,300px)!important}
+  .facts{margin-top:22px}
+  .cards,.night,.ov{margin-top:28px}
+  .trio,.stats{margin-top:32px}
+  .infinity{font-size:clamp(60px,26vh,110px)}
+  .closing{margin-top:44px}
+  .intro h2,.notice h2{font-size:clamp(28px,10vh,48px)}
+}
+@media (orientation:landscape) and (max-height:520px) and (min-width:560px){
+  .cards.c3,.night,.trio{grid-template-columns:repeat(3,1fr)}
+  .cards.c3 .card{flex-direction:column}
+  .cards.c3 .card .ph{width:100%;aspect-ratio:4/3}
+  .cards.c2,.ov{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .ncards.n2{grid-template-columns:repeat(2,1fr);margin-top:12px}
+}
+@media (orientation:landscape) and (max-height:520px) and (min-width:700px){
+  .ncards{grid-template-columns:repeat(3,1fr);margin-top:28px}
+  .ncards.n2{margin-top:12px}
+}
 </style>
 </head>
 <body>
@@ -369,7 +438,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
 <section class="cover">
   <div class="wrap">
     <p class="eyebrow rv">기업파트너십팀 · 2026 하반기 워크샵</p>
-    <h1 class="rv">Talk.<br>Play.<br><em>Heal.</em></h1>
+    <h1 class="rv">Talk. <br>Play. <br><em>Heal.</em></h1>
     <p class="tag rv">일은 잠깐 내려놓고, 우리끼리 실컷 떠들자.</p>
     <p class="when rv">2026.11.12 (목) – 11.13 (금) &nbsp;·&nbsp; 강원 횡성 &nbsp;·&nbsp; 10명</p>
     <div class="btns rv">
@@ -811,6 +880,9 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   /* "reduce" = the visitor pressed the 움직임 끄기 button. The OS animation setting is NOT used, so the effects show by default. */
   var reduce=false; try{reduce=localStorage.getItem('gipa-motion')==='off'}catch(e){}
   var $$=function(s){return [].slice.call(document.querySelectorAll(s))};
+  window.scrollTo(0,0);
+  window.addEventListener('load',function(){window.scrollTo(0,0)});
+  window.addEventListener('pageshow',function(e){if(e.persisted)window.scrollTo(0,0)});
   var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
 
   /* stagger: reveal each photo / card one after another */
