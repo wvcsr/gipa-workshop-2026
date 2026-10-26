@@ -227,11 +227,21 @@ html.lenis{scroll-behavior:auto!important}
 .cover-photo img{transform:translate3d(0,var(--py,0px),0) scale(1.18)}
 .dayhead .big{will-change:transform,opacity}
 
-/* floating chat stickers */
-.floaters{position:fixed;inset:0;z-index:20;pointer-events:none;overflow:hidden}
-.fl{position:absolute;left:0;top:0;will-change:transform}
-.fl .bob{display:block;animation:bob var(--t,6s) ease-in-out infinite;transform-origin:50% 60%}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,-4deg))}50%{transform:translateY(-12px) rotate(calc(var(--r,-4deg) * -1))}}
+/* pop-out stickers: appear next to a photo while it is hovered (or tapped on touch screens) */
+.pops{position:fixed;inset:0;z-index:30;pointer-events:none}
+.pop{position:absolute;left:0;top:0}
+.pop-in{display:block;opacity:0;transform:scale(0) rotate(-24deg);transform-origin:22% 92%}
+.pop.on .pop-in{animation:popIn .55s cubic-bezier(.34,1.56,.64,1) forwards,popWiggle 2.6s ease-in-out .6s infinite}
+.pop.off .pop-in{animation:popOut .18s ease-in forwards}
+@keyframes popIn{0%{opacity:0;transform:scale(0) rotate(-24deg)}55%{opacity:1}100%{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
+@keyframes popOut{from{opacity:1;transform:scale(1) rotate(var(--r,0deg))}to{opacity:0;transform:scale(.2) rotate(14deg)}}
+@keyframes popWiggle{0%,100%{transform:scale(1) rotate(var(--r,0deg))}50%{transform:scale(1.05) rotate(calc(var(--r,0deg) * -.6))}}
+.pop.flip .bub::after{left:auto;right:18px}
+.burst{position:absolute;left:50%;top:50%;width:0;height:0}
+.burst i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--c,#ffd84d);opacity:0}
+.pop.on .burst i{animation:burst .6s ease-out forwards}
+.burst i:nth-child(even){width:5px;height:5px;left:-2.5px;top:-2.5px;background:#fff}
+@keyframes burst{0%{opacity:1;transform:rotate(var(--a)) translateY(-10px) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-58px) scale(.2)}}
 .bub{position:relative;display:inline-block;white-space:nowrap;padding:9px 16px;border-radius:22px;border:3px solid #fff;background:var(--c);color:#1d1d1f;font-size:15px;font-weight:700;letter-spacing:-.02em;line-height:1.2;box-shadow:0 8px 18px rgba(0,0,0,.16)}
 .bub::after{content:"";position:absolute;left:18px;bottom:-9px;width:13px;height:13px;background:var(--c);border:3px solid #fff;border-top:0;border-left:0;transform:rotate(45deg)}
 .bub.r::after{left:auto;right:18px}
@@ -267,12 +277,12 @@ html.no-motion .fx{display:none}
 /* motion is ON by default (even if the OS has animations turned off); the visitor can switch it off with the button */
 html.no-motion{scroll-behavior:auto}
 html.no-motion.js .rv{opacity:1;transform:none;transition:none}
-html.no-motion .floaters{display:none}
+html.no-motion .pops{display:none}
 html.no-motion .mosaic figure img,html.no-motion .card .ph img,html.no-motion .night .ph img,html.no-motion .cover-photo img{transform:none;will-change:auto}
 html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
 .motion-toggle{position:fixed;z-index:45;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));font:inherit;font-size:12px;font-weight:600;letter-spacing:-.01em;color:#fff;background:rgba(29,29,31,.78);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border:0;border-radius:var(--r-pill);padding:9px 14px;cursor:pointer;transition:transform .15s}
 .motion-toggle:active{transform:scale(.95)}
-@media print{.floaters,.motion-toggle{display:none}}
+@media print{.pops,.motion-toggle{display:none}}
 
 /* ─────────────  responsive  ───────────── */
 @media (max-width:1068px){
@@ -289,7 +299,6 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   .strip .s{padding:10px 22px}
 }
 @media (max-width:734px){
-  .fl.hide-m{display:none}
   .bub{font-size:13px;padding:7px 12px}
   .stk{width:50px;height:50px}
   .gnav .brand{display:none}
@@ -800,18 +809,6 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   </div>
 </footer>
 
-<!-- floating chat stickers (decorative) -->
-<div class="floaters" aria-hidden="true">
-  <div class="fl" data-x="2" data-y="16" data-s=".30"><span class="bob" style="--r:-5deg;--t:6.5s"><span class="bub" style="--c:#8fd0ff">수다 ON</span></span></div>
-  <div class="fl" data-x="94" data-y="26" data-s=".22"><span class="bob" style="--r:6deg;--t:7.5s"><svg class="stk" viewBox="0 0 68 68"><g transform="translate(0 0)"><g fill="#ffd23f" stroke="#fff" stroke-width="2"><rect x="31.500" y="3" width="5" height="10" rx="2.500"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(45 34 34)"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(90 34 34)"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(135 34 34)"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(180 34 34)"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(225 34 34)"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(270 34 34)"/><rect x="31.500" y="3" width="5" height="10" rx="2.500" transform="rotate(315 34 34)"/></g><circle cx="34" cy="34" r="17" fill="#ffd23f" stroke="#fff" stroke-width="3"/><circle cx="28.500" cy="32" r="2.200" fill="#1d1d1f"/><circle cx="39.500" cy="32" r="2.200" fill="#1d1d1f"/><path d="M28 39q6 6 12 0" fill="none" stroke="#1d1d1f" stroke-width="2.200" stroke-linecap="round"/></g></svg></span></div>
-  <div class="fl" data-x="90" data-y="58" data-s=".45"><span class="bob" style="--r:4deg;--t:5.8s"><span class="bub r" style="--c:#ffd84d">ㅋㅋㅋ</span></span></div>
-  <div class="fl hide-m" data-x="4" data-y="52" data-s=".28"><span class="bob" style="--r:-6deg;--t:7s"><svg class="stk" viewBox="0 0 68 68"><path d="M25 10q-3-4 0-8M34 10q-3-4 0-8M43 10q-3-4 0-8" fill="none" stroke="#bfe3ff" stroke-width="3" stroke-linecap="round"/><path d="M8 46C8 27 22 17 34 17s26 10 26 29c0 6-7 10-26 10S8 52 8 46z" fill="#ffe6b8" stroke="#fff" stroke-width="3"/><path d="M18 30c3-5 8-8 13-9" fill="none" stroke="#fff7e6" stroke-width="3" stroke-linecap="round"/><circle cx="27" cy="40" r="2.200" fill="#1d1d1f"/><circle cx="41" cy="40" r="2.200" fill="#1d1d1f"/><path d="M29 46q5 4 10 0" fill="none" stroke="#1d1d1f" stroke-width="2.200" stroke-linecap="round"/><circle cx="22" cy="45" r="3" fill="#ffb3b3" opacity=".7"/><circle cx="46" cy="45" r="3" fill="#ffb3b3" opacity=".7"/></svg></span></div>
-  <div class="fl" data-x="2" data-y="84" data-s=".40"><span class="bob" style="--r:-4deg;--t:6.2s"><span class="bub" style="--c:#ff9d9d">한우 먹자</span></span></div>
-  <div class="fl hide-m" data-x="92" data-y="86" data-s=".18"><span class="bob" style="--r:3deg;--t:8s"><svg class="stk" viewBox="0 0 68 68"><path d="M17 50a12 12 0 0 1 1-24 16 16 0 0 1 31 4 10 10 0 0 1-1 20z" fill="#d6ecff" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="28" cy="40" r="2" fill="#1d1d1f"/><circle cx="40" cy="40" r="2" fill="#1d1d1f"/><path d="M30 45q4 3 8 0" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round"/></svg></span></div>
-  <div class="fl hide-m" data-x="84" data-y="6" data-s=".36"><span class="bob" style="--r:5deg;--t:6.8s"><span class="bub r" style="--c:#ffb877">불멍 ON</span></span></div>
-  <div class="fl hide-m" data-x="6" data-y="36" data-s=".50"><span class="bob" style="--r:-3deg;--t:5.5s"><span class="bub" style="--c:#8fe6c9">찰칵!</span></span></div>
-</div>
-
 <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false">움직임 끄기</button>
 
 <script src="assets/lenis.min.js"></script>
@@ -838,7 +835,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
     e.preventDefault(); lenis.scrollTo(t,{offset:-44,duration:1.6});
   });
 
-  var nav=document.querySelector('.gnav'), fl=$$('.fl'), heads=$$('.dayhead'), FR=[.5,.5,.25,.8,.6,.3,.7,.4];
+  var nav=document.querySelector('.gnav'), heads=$$('.dayhead');
   var par=$$('.mosaic figure img,.card .ph img,.night .ph img,.cover-photo img');
   var vh=innerHeight, vw=innerWidth, last=-1;
 
@@ -898,6 +895,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
     btn.textContent=reduce?'움직임 켜기':'움직임 끄기';
     btn.setAttribute('aria-pressed',reduce?'true':'false');
     if(reduce){
+      if(cur)hidePop(cur);
       if(lenis){lenis.destroy();lenis=null}
       par.forEach(function(i){i.style.removeProperty('--py')});
       heads.forEach(function(h){var b=h.querySelector('.big');if(b){b.style.transform='';b.style.opacity=''}});
@@ -910,24 +908,92 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   });
   applyMotion();
 
+
+  /* pop-out stickers: one per photo, shown beside the photo while it is hovered (tap on touch screens) */
+  var SUN='<svg class="stk" style="width:84px;height:84px" viewBox="0 0 68 68"><g fill="#ffd23f" stroke="#fff" stroke-width="2"><rect x="31.5" y="3" width="5" height="10" rx="2.5"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(45 34 34)"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(90 34 34)"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(135 34 34)"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(180 34 34)"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(225 34 34)"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(270 34 34)"/><rect x="31.5" y="3" width="5" height="10" rx="2.5" transform="rotate(315 34 34)"/></g><circle cx="34" cy="34" r="17" fill="#ffd23f" stroke="#fff" stroke-width="3"/><circle cx="28.5" cy="32" r="2.2" fill="#1d1d1f"/><circle cx="39.5" cy="32" r="2.2" fill="#1d1d1f"/><path d="M28 39q6 6 12 0" fill="none" stroke="#1d1d1f" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  var BUN='<svg class="stk" style="width:84px;height:84px" viewBox="0 0 68 68"><path d="M25 10q-3-4 0-8M34 10q-3-4 0-8M43 10q-3-4 0-8" fill="none" stroke="#bfe3ff" stroke-width="3" stroke-linecap="round"/><path d="M8 46C8 27 22 17 34 17s26 10 26 29c0 6-7 10-26 10S8 52 8 46z" fill="#ffe6b8" stroke="#fff" stroke-width="3"/><path d="M18 30c3-5 8-8 13-9" fill="none" stroke="#fff7e6" stroke-width="3" stroke-linecap="round"/><circle cx="27" cy="40" r="2.2" fill="#1d1d1f"/><circle cx="41" cy="40" r="2.2" fill="#1d1d1f"/><path d="M29 46q5 4 10 0" fill="none" stroke="#1d1d1f" stroke-width="2.2" stroke-linecap="round"/><circle cx="22" cy="45" r="3" fill="#ffb3b3" opacity=".7"/><circle cx="46" cy="45" r="3" fill="#ffb3b3" opacity=".7"/></svg>';
+  var CLOUD='<svg class="stk" style="width:84px;height:84px" viewBox="0 0 68 68"><path d="M17 50a12 12 0 0 1 1-24 16 16 0 0 1 31 4 10 10 0 0 1-1 20z" fill="#d6ecff" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="28" cy="40" r="2" fill="#1d1d1f"/><circle cx="40" cy="40" r="2" fill="#1d1d1f"/><path d="M30 45q4 3 8 0" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round"/></svg>';
+  var CH={sun:SUN,bun:BUN,cloud:CLOUD};
+  var POP={
+    'cover-lake':{ch:'sun',r:8},
+    'pungsuwon-out':{t:'찰칵!',c:'#8fe6c9',r:-6},
+    'pungsuwon-in':{t:'속닥속닥',c:'#cbbcff',r:5},
+    'jieun-tofu':{t:'호호~ 뜨거워!',c:'#ff9d9d',r:-5},
+    'jieun-out':{t:'여기예요!',c:'#ffd84d',r:4},
+    'jieun-stew':{t:'얼큰해!',c:'#ffb877',r:6},
+    'luge-hero':{t:'슝~!!',c:'#ffd84d',r:-6},
+    'luge-ride':{t:'꺄아악!!',c:'#ff9d9d',r:5},
+    'luge-line':{t:'누가 1등?',c:'#8fd0ff',r:-4},
+    'mart-out':{t:'장보기 미션!',c:'#8fe6c9',r:4},
+    'taipei-in':{t:'버블티 한 잔?',c:'#ffb3d9',r:-5},
+    'hosu133-garden':{t:'인생샷 각!',c:'#ffd84d',r:5},
+    'cottage-out':{t:'커피 한 잔의 여유',c:'#ffb877',r:-4},
+    'pension-day':{t:'도착~!',c:'#8fd0ff',r:5},
+    'pension-night':{t:'밤이 깊어요',c:'#cbbcff',r:-5},
+    'pension-tent':{t:'고기 굽자!',c:'#ff9d9d',r:4},
+    'pension-fire':{t:'불멍 ON',c:'#ffb877',r:-6},
+    'pension-room':{t:'꿀잠 예약',c:'#8fe6c9',r:5},
+    'hosu-bench':{t:'나비 벤치 앉아봐',c:'#ffd84d',r:-5},
+    'hosu-walk':{t:'수다 떨며 걷기',c:'#8fd0ff',r:4},
+    'hosu-art':{t:'한 컷!',c:'#ffb3d9',r:-4},
+    'laonia-sign':{t:'무한리필!!',c:'#ffd84d',r:5},
+    'laonia-grill':{t:'치이익~',c:'#ff9d9d',r:-5},
+    'laonia-meat':{t:'한우 최고!',c:'#ffb877',r:4},
+    'morak-bun':{ch:'bun',r:-6},
+    'morak-bldg':{t:'찐빵 마을!',c:'#ffd84d',r:5},
+    'morak-make':{t:'빚어볼까?',c:'#8fe6c9',r:-4},
+    'sanilio-aerial':{ch:'cloud',r:6},
+    'most-out':{t:'여유 한 모금',c:'#cbbcff',r:-5}
+  };
+  var pops=document.createElement('div'); pops.className='pops'; pops.setAttribute('aria-hidden','true'); document.body.appendChild(pops);
+  var cur=null;
+  function popFor(host,spec){
+    if(host._pop)return host._pop;
+    var el=document.createElement('div'); el.className='pop';
+    el.style.setProperty('--r',(spec.r||0)+'deg'); el.style.setProperty('--c',spec.c||'#ffd84d');
+    var inner=spec.ch?CH[spec.ch]:'<span class="bub" style="--c:'+spec.c+'">'+spec.t+'</span>', burst='';
+    for(var i=0;i<8;i++)burst+='<i style="--a:'+(i*45)+'deg"></i>';
+    el.innerHTML='<span class="pop-in">'+inner+'</span><span class="burst">'+burst+'</span>';
+    pops.appendChild(el); host._pop=el; return el;
+  }
+  function placePop(host){
+    var el=host._pop; if(!el)return;
+    var r=host.getBoundingClientRect();
+    if(r.bottom<0||r.top>vh){hidePop(host);return}
+    var w=el.offsetWidth, h=el.offsetHeight, flip=r.right+w*.45>vw-8;
+    el.classList.toggle('flip',flip);
+    var x=flip?r.left-w*.55:r.right-w*.45, y=r.top-h*.55;
+    x=clamp(x,8,vw-w-8); y=clamp(y,52,vh-h-8);
+    el.style.transform='translate3d('+x.toFixed(0)+'px,'+y.toFixed(0)+'px,0)';
+  }
+  function showPop(host,spec){
+    if(reduce)return;
+    if(cur&&cur!==host)hidePop(cur);
+    var el=popFor(host,spec); cur=host; placePop(host);
+    el.classList.remove('off','on'); void el.offsetWidth; el.classList.add('on');
+  }
+  function hidePop(host){
+    var el=host._pop; if(!el)return;
+    clearTimeout(host._t);
+    if(el.classList.contains('on')){el.classList.remove('on');el.classList.add('off')}
+    if(cur===host)cur=null;
+  }
+  var touchOnly=window.matchMedia&&matchMedia('(hover: none)').matches;
+  par.forEach(function(img){
+    var key=(img.getAttribute('src')||'').replace(/^.*\//,'').replace(/\.\w+$/,''), spec=POP[key];
+    if(!spec)return;
+    var host=img.parentNode;
+    host.addEventListener('mouseenter',function(){if(!touchOnly)showPop(host,spec)});
+    host.addEventListener('mouseleave',function(){if(!touchOnly)hidePop(host)});
+    if(touchOnly)host.addEventListener('click',function(){
+      showPop(host,spec); clearTimeout(host._t); host._t=setTimeout(function(){hidePop(host)},2600);
+    });
+  });
+
   function update(sy){
     var max=document.documentElement.scrollHeight-vh;
     nav.style.setProperty('--p',max>0?clamp(sy/max,0,1).toFixed(4):0);
     if(!reduce){
-      var span=vh+200;
-      var margin=Math.max(0,(vw-1080)/2);
-      fl.forEach(function(f,i){
-        if(f.offsetParent===null)return;
-        var w=f.offsetWidth, left=+f.dataset.x<50, fr=FR[i%FR.length], x;
-        if(margin-w-16>=0){ /* wide screen: float inside the empty side margins, never over the content */
-          var off=8+fr*(margin-w-16);
-          x=left?off:vw-margin+off;
-        }else{ /* narrow screen: peek in from the screen edge */
-          x=left?-w*0.55:vw-w*0.45;
-        }
-        var y=(((+f.dataset.y/100)*vh-sy*(+f.dataset.s))%span+span)%span-100;
-        f.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0)';
-      });
       par.forEach(function(img){
         var r=img.parentNode.getBoundingClientRect();
         var onscreen=!(r.bottom<-150||r.top>vh+150);
@@ -950,6 +1016,7 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
     if(lenis)lenis.raf(t);
     var sy=lenis?lenis.scroll:window.scrollY;
     if(Math.abs(sy-last)>0.05){update(sy);last=sy}
+    if(cur)placePop(cur);
     requestAnimationFrame(loop);
   }
   window.addEventListener('resize',function(){vh=innerHeight;vw=innerWidth;last=-1});
