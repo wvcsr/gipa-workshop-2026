@@ -7,6 +7,16 @@
 /* always start at the top: no scroll restoration on refresh / back, and drop any #hash from the address */
 try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(location.hash)history.replaceState(null,'',location.pathname+location.search)}catch(e){}
 </script>
+<script>
+/* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
+   Bump SITE_VERSION here AND in version.json on every publish. */
+(function(){var SITE_VERSION='20261026d';
+try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
+  if(!j||!j.v||j.v===SITE_VERSION)return;
+  var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
+  var u=new URL(location.href); u.searchParams.set('r',j.v); location.replace(u.toString());
+}).catch(function(){})}catch(e){}})();
+</script>
 <title>Giup-Heartnership Team Workshop</title>
 <meta name="description" content="기업파트너십팀 2026 하반기 워크샵 안내서 — 2026.11.12(목)–11.13(금), 강원 횡성">
 <link rel="preconnect" href="https://fonts.googleapis.com">
