@@ -10,7 +10,7 @@ try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(loca
 <script>
 /* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
    Bump SITE_VERSION here AND in version.json on every publish. */
-(function(){var SITE_VERSION='20261103g';
+(function(){var SITE_VERSION='20261103h';
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.v||j.v===SITE_VERSION)return;
   var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
@@ -571,8 +571,8 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
 <!-- 이동 -->
 <section class="tile parch slim">
   <div class="strip s4 rv">
-    <div class="s"><div class="t">06:30</div><div class="n">차량 2 출발</div><div class="d">호성님 집 → 종훈님 집 08:00 → 선영님 집 08:40</div></div>
     <div class="s"><div class="t">08:10 – 08:20</div><div class="n">차량 1 본부 출발</div><div class="d">08:10 집결 → 08:20 출발</div></div>
+    <div class="s"><div class="t">06:30</div><div class="n">차량 2 출발</div><div class="d">호성님 집 → 종훈님 집 08:00 → 선영님 집 08:40</div></div>
     <div class="s"><div class="t">09:30</div><div class="n">양평 휴게소 합류</div><div class="d">만남의 광장 · 이후 함께 횡성으로</div></div>
     <div class="s"><div class="t">ARRIVE</div><div class="n">강원 횡성</div><div class="d">창밖 풍경이 달라지는 순간</div></div>
   </div>
@@ -869,7 +869,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
       <div class="d rv">
         <h3>DAY 1 <small>11.12 (목)</small></h3>
         <ol>
-          <li><time>06:30</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16l1.5-5h11L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5"/></svg></span><div><b>횡성으로 이동</b><span>차량 2 06:30 · 차량 1 08:20 출발 → 09:30 양평 휴게소 합류</span></div></li>
+          <li><time>06:30</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16l1.5-5h11L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5"/></svg></span><div><b>횡성으로 이동</b><span>차량 1 08:20 · 차량 2 06:30 출발 → 09:30 양평 휴게소 합류</span></div></li>
           <li><time>11:00</time><span class="th"><img src="assets/pungsuwon-out.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>풍수원성당</b><span>팀빌딩</span></div></li>
           <li><time>12:30</time><span class="th"><img src="assets/jieun-tofu.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>점심 · 지은네식당</b><span>돌솥두부정식 <em class="rsvm">예약 완료</em></span></div></li>
           <li><time>13:40</time><span class="th"><img src="assets/luge-hero.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>횡성루지체험장</b><span>팀빌딩 · 루지 2회</span></div></li>
@@ -965,7 +965,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
       <article class="ncard rv">
         <svg viewBox="0 0 48 48"><path d="M24 43s14-12.5 14-23a14 14 0 0 0-28 0c0 10.5 14 23 14 23z"/><circle cx="24" cy="20" r="5"/></svg>
         <h3>집결지</h3>
-        <div class="car"><b>출발 · 11/12 (목) 06:30</b><p>차량 2는 06:30 호성님 집에서 출발해 08:00 종훈님 집, 08:40 선영님 집을 차례로 들러요. 차량 1은 본부에서 08:10 집결 후 08:20 출발해요.</p></div>
+        <div class="car"><b>출발 · 11/12 (목) 06:30</b><p>차량 1은 본부에서 08:10 집결 후 08:20 출발해요. 차량 2는 06:30 호성님 집에서 출발해 08:00 종훈님 집, 08:40 선영님 집을 차례로 들러요.</p></div>
         <div class="car"><b>합류 · 11/12 (목) 09:30</b><p>두 차량이 양평 만남의 광장 휴게소에서 만나, 함께 횡성으로 이동해요.</p></div>
         <div class="car"><b>귀가 · 11/13 (금) 14:30</b><p>횡성에서 출발해서 본부와 시흥에 각각 도착해요.</p></div>
       </article>
