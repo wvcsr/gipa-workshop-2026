@@ -10,7 +10,7 @@ try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(loca
 <script>
 /* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
    Bump SITE_VERSION here AND in version.json on every publish. */
-(function(){var SITE_VERSION='20261103a';
+(function(){var SITE_VERSION='20261103b';
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.v||j.v===SITE_VERSION)return;
   var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
@@ -426,6 +426,16 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   .ncards.n2{margin-top:12px}
 }
 
+/* ─────────────  11/03 일정 변경 반영: 변경 배지 · 예약 완료 배지 · 차량 경로  ───────────── */
+@media (min-width:735px){.strip.s4 .s{padding:6px 24px}}
+.eyebrow .chg{background:#ff9500;color:#1d1d1f;border-radius:var(--r-pill);padding:2px 10px;font-size:12px;letter-spacing:.04em}
+.ov li .chg,.ov li .rsvm{display:inline-block;border-radius:var(--r-pill);padding:0 8px;font-size:11px;font-weight:700;font-style:normal;margin-left:4px;line-height:1.6;letter-spacing:0;color:#1d1d1f}
+.ov li .chg{background:#ff9500}
+.ov li .rsvm{background:#30d158;color:#05230f}
+.rsv{display:inline-flex;align-items:center;gap:7px;margin-top:18px;background:#30d158;color:#05230f;border-radius:var(--r-pill);padding:8px 18px 8px 12px;font-size:15px;font-weight:700;letter-spacing:-.01em}
+.rsv svg{width:18px;height:18px;stroke:#05230f;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ncard .car p.rt{font-size:14px;font-weight:500;color:var(--ink);margin-top:8px;padding:8px 10px;background:var(--parchment);border-radius:10px}
+
 /* ─────────────  문구 편집 모드  ───────────── */
 .ed-open,.ed-bar button{font:inherit;font-size:12px;font-weight:600;letter-spacing:-.01em;border:0;cursor:pointer;border-radius:var(--r-pill);transition:transform .15s}
 .ed-open{position:fixed;z-index:45;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));color:#fff;background:rgba(0,102,204,.92);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);padding:9px 14px}
@@ -528,7 +538,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
     <a href="#d1-church">풍수원성당</a>
     <a href="#d1-lunch">지은네식당</a>
     <a href="#d1-luge">횡성루지</a>
-    <a href="#d1-mart">장보기</a>
+    <a href="#d1-mart">하나로마트(선택)</a>
     <a href="#d1-cafe">카페</a>
     <a href="#d1-stay">호숫길펜션</a>
     <a href="#d1-night">바베큐 · 레크 · 불멍</a>
@@ -537,8 +547,10 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
 
 <!-- 이동 -->
 <section class="tile parch slim">
-  <div class="strip rv">
-    <div class="s"><div class="t">08:00 – 11:00</div><div class="n">횡성으로 이동</div><div class="d">본부 출발 · 시흥 출발 (차량 2대)</div></div>
+  <div class="strip s4 rv">
+    <div class="s"><div class="t">08:00</div><div class="n">차량 2 출발</div><div class="d">종훈님 집 → 선영님 집 → 휴게소</div></div>
+    <div class="s"><div class="t">08:10 – 08:20</div><div class="n">차량 1 본부 출발</div><div class="d">08:10 집결 → 08:20 출발</div></div>
+    <div class="s"><div class="t">09:30</div><div class="n">양평 휴게소 합류</div><div class="d">만남의 광장 · 이후 함께 횡성으로</div></div>
     <div class="s"><div class="t">ARRIVE</div><div class="n">강원 횡성</div><div class="d">창밖 풍경이 달라지는 순간</div></div>
   </div>
 </section>
@@ -567,6 +579,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
   <div class="wrap">
     <p class="eyebrow rv"><span class="time">12:30 – 13:30</span> · Lunch</p>
     <h2 class="stop rv">지은네식당</h2>
+    <p class="rsv rv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>예약 완료</p>
     <p class="lead rv">우천면의 두부 요리집. 따끈한 <b style="color:#fff;font-weight:600">돌솥두부정식</b>으로 든든하게 첫 끼를 채워요.</p>
     <div class="heal rv"><i>HEAL POINT</i>맛있는 밥상 앞에서 터지는 수다</div>
     <div class="mosaic m-a rv">
@@ -605,15 +618,15 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
 <!-- 4) 장보기 -->
 <section class="tile parch center" id="d1-mart">
   <div class="wrap">
-    <p class="eyebrow rv"><span class="time">14:50 – 15:30</span> · Grocery</p>
+    <p class="eyebrow rv"><span class="time">카페 가는 길에</span> · On the way <span class="opt">선택</span><span class="chg">변경</span></p>
     <h2 class="stop rv">하나로마트 동횡성농협</h2>
-    <p class="lead rv">저녁 바베큐 재료를 다 같이 고르는 시간. 카트는 한 대, 의견은 열 개.</p>
-    <div class="heal rv"><i>HEAL POINT</i>같이 장 보는 소소한 즐거움</div>
+    <p class="lead rv">장은 서울에서 미리 보고 출발해요. 카페 가는 길에 빠진 게 있으면 잠깐 들르는 선택 코스예요.</p>
+    <div class="heal rv"><i>HEAL POINT</i>필요하면 잠깐, 가볍게 들르기</div>
     <div class="mosaic m-s rv" style="grid-template-columns:1fr">
       <figure style="height:clamp(240px,34vw,440px)"><img src="assets/mart-out.jpg?v=20261026b" alt="하나로마트 동횡성농협 외관" loading="lazy"><span class="chipc">동횡성농협 하나로마트</span></figure>
     </div>
     <dl class="facts" style="text-align:left">
-      <div><dt>미션</dt><dd>저녁 바베큐 재료 장보기</dd></div>
+      <div><dt>미션</dt><dd>빠진 재료 · 간식만 보충 (선택)</dd></div>
       <div><dt>주소</dt><dd>횡성군 우천면 수남로 356</dd></div>
       <div><dt>지도</dt><dd><a href="https://map.naver.com/p/entry/place/15517699" target="_blank" rel="noopener">네이버지도에서 보기 ›</a></dd></div>
     </dl>
@@ -623,7 +636,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
 <!-- 5) 카페 (택1) -->
 <section class="tile light center" id="d1-cafe">
   <div class="wrap">
-    <p class="eyebrow rv"><span class="time">15:40 – 17:00</span> · Café <span class="opt">택 1</span></p>
+    <p class="eyebrow rv"><span class="time">15:20 – 16:40</span> · Café <span class="opt">택 1</span><span class="chg">시간 변경</span></p>
     <h2 class="stop rv">오늘의 카페는 어디?</h2>
     <p class="lead rv">분위기 다른 세 곳 중 한 곳. 현장에서 팀 컨디션 따라 골라요.</p>
     <div class="heal rv"><i>HEAL POINT</i>수다 떨기 딱 좋은 1시간 20분</div>
@@ -665,7 +678,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
 <!-- 6) 숙소 -->
 <section class="tile parch center" id="d1-stay">
   <div class="wrap">
-    <p class="eyebrow rv"><span class="time">17:30 – 18:00</span> · Check-in</p>
+    <p class="eyebrow rv"><span class="time">17:00 – 18:00</span> · Check-in <span class="chg">시간 변경</span></p>
     <h2 class="stop rv">호숫길펜션 구방리518</h2>
     <p class="lead rv">오늘 밤의 베이스캠프. 짐 풀고 숨 고르고, 저녁 준비를 시작해요.</p>
     <div class="heal rv"><i>HEAL POINT</i>짐 풀고, 숨 고르기</div>
@@ -677,7 +690,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
     <dl class="facts" style="text-align:left">
       <div><dt>객실</dt><dd>한과동 · 더덕동</dd></div>
       <div><dt>주소</dt><dd>횡성군 갑천면 태기로구방5길 23-12</dd></div>
-      <div><dt>체크인</dt><dd>오후 3시부터 (정비 17:30 – 18:00)</dd></div>
+      <div><dt>체크인</dt><dd>오후 3시부터 (도착 · 정비 17:00 – 18:00)</dd></div>
       <div><dt>지도</dt><dd><a href="https://map.naver.com/p/entry/place/1916559389" target="_blank" rel="noopener">네이버지도에서 보기 ›</a></dd></div>
     </dl>
   </div>
@@ -695,7 +708,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
         <div class="bd">
           <div class="t">18:00 – 20:00</div>
           <h3>바베큐 디너</h3>
-          <p>오후에 직접 고른 재료로 숙소 바베큐. 굽는 사람 따로, 먹는 사람 따로 없이 같이.</p>
+          <p>서울에서 미리 장 봐 온 재료로 숙소 바베큐. 굽는 사람 따로, 먹는 사람 따로 없이 같이.</p>
         </div>
       </article>
       <article class="n rec rv">
@@ -715,7 +728,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
         <div class="bd">
           <div class="t">22:30 ~</div>
           <h3>취침 · 자유시간</h3>
-          <p>타닥타닥 불멍 앞에 둘러앉아 못다 한 이야기를. 졸리면 자러 가요.</p>
+          <p>타닥타닥 불멍 앞에 둘러앉아 못다 한 이야기를. 장작은 숙소에서 준비해 주고, 필요하면 불도 피워 줘요. 졸리면 자러 가요.</p>
         </div>
       </article>
     </div>
@@ -833,13 +846,13 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
       <div class="d rv">
         <h3>DAY 1 <small>11.12 (목)</small></h3>
         <ol>
-          <li><time>08:00</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16l1.5-5h11L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5"/></svg></span><div><b>횡성으로 이동</b><span>본부 · 시흥 출발</span></div></li>
+          <li><time>08:00</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16l1.5-5h11L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5"/></svg></span><div><b>횡성으로 이동</b><span>차량 2 08:00 · 차량 1 08:20 출발 → 09:30 양평 휴게소 합류</span></div></li>
           <li><time>11:00</time><span class="th"><img src="assets/pungsuwon-out.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>풍수원성당</b><span>팀빌딩</span></div></li>
-          <li><time>12:30</time><span class="th"><img src="assets/jieun-tofu.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>점심 · 지은네식당</b><span>돌솥두부정식</span></div></li>
+          <li><time>12:30</time><span class="th"><img src="assets/jieun-tofu.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>점심 · 지은네식당</b><span>돌솥두부정식 <em class="rsvm">예약 완료</em></span></div></li>
           <li><time>13:40</time><span class="th"><img src="assets/luge-hero.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>횡성루지체험장</b><span>팀빌딩 · 루지 2회</span></div></li>
-          <li><time>14:50</time><span class="th"><img src="assets/mart-out.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>장보기</b><span>하나로마트 동횡성농협</span></div></li>
-          <li><time>15:40</time><span class="th"><img src="assets/taipei-in.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>카페 (택 1)</b><span>타이페이909 · 호수길133 · 코티지생운</span></div></li>
-          <li><time>17:30</time><span class="th"><img src="assets/pension-day.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>숙소 체크인 · 정비</b><span>호숫길펜션 구방리518</span></div></li>
+          <li class="opt"><time>선택</time><span class="th"><img src="assets/mart-out.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>하나로마트 (선택)</b><span>카페 가는 길에 필요하면 잠깐 <em class="chg">변경</em></span></div></li>
+          <li><time>15:20</time><span class="th"><img src="assets/taipei-in.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>카페 (택 1)</b><span>타이페이909 · 호수길133 · 코티지생운 <em class="chg">시간 변경</em></span></div></li>
+          <li><time>17:00</time><span class="th"><img src="assets/pension-day.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>숙소 체크인 · 정비</b><span>호숫길펜션 구방리518 <em class="chg">시간 변경</em></span></div></li>
           <li><time>18:00</time><span class="th"><img src="assets/pension-tent.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>저녁 · 바베큐</b><span>숙소</span></div></li>
           <li><time>20:00</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.5 2.2 2 3.5 2s2.5-.5 3.5-2M9 9.5h.01M15 9.5h.01"/></svg></span><div><b>레크리에이션</b><span>선물뽑기 · 퀴즈 · 보드게임</span></div></li>
           <li><time>22:30</time><span class="th"><img src="assets/pension-fire.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>취침 · 자유시간</b><span>불멍</span></div></li>
@@ -873,6 +886,9 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
         <svg viewBox="0 0 48 48"><path d="M16 14v-2a8 8 0 0 1 16 0v2"/><rect x="9" y="14" width="30" height="28" rx="9"/><path d="M17 27h14v9H17zM24 27v-5"/></svg>
         <h3>준비물</h3>
         <p class="big">즐겁게 즐길 마음!<br>함박웃음!</p>
+        <div class="car"><b>숙소 구비</b><p>샴푸 · 수건 · 드라이기</p></div>
+        <div class="car"><b>침구류 일체 제공</b><p>숙소에서 전부 준비해 줘요.</p></div>
+        <div class="car"><b>개별 준비 (선택)</b><p>트리트먼트 · 필요한 사람만 챙겨요.</p></div>
       </article>
       <article class="ncard rv">
         <svg viewBox="0 0 48 48"><path d="M17 8l-10 6 4 9 5-2v21h16V21l5 2 4-9-10-6c-1 3-3.5 5-7 5s-6-2-7-5z"/></svg>
@@ -889,13 +905,14 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
       <article class="ncard rv">
         <svg viewBox="0 0 48 48"><path d="M8 28l3-10c.5-2 2-3 4-3h18c2 0 3.5 1 4 3l3 10"/><rect x="5" y="28" width="38" height="9" rx="3"/><path d="M11 37v4M37 37v4M12 32.5h.01M36 32.5h.01"/></svg>
         <h3>차량</h3>
-        <div class="car"><b>차량 1 · 6697</b><span>본부 출발</span><p>운전 <strong>황병욱</strong> (귀가도 동일)<br>백진 · 박소진 · 윤새롬 · 강안나 · 이상혁 · 김민지</p></div>
-        <div class="car"><b>차량 2 · 6698</b><span>시흥 출발</span><p>운전 <strong>유호성</strong> (귀가는 <strong>최종훈</strong>)<br>최종훈 · 박선영</p></div>
+        <div class="car"><b>차량 1 · 6697</b><span>본부 출발</span><p>운전 <strong>황병욱</strong> (귀가도 동일)<br>백진 · 박소진 · 윤새롬 · 강안나 · 이상혁 · 김민지</p><p class="rt">본부 <strong>08:10</strong> 집결 → <strong>08:20</strong> 출발 → <strong>09:30</strong> 양평 만남의 광장 휴게소</p></div>
+        <div class="car"><b>차량 2 · 6698</b><span>종훈님 집 출발</span><p>운전 <strong>유호성</strong> (귀가는 <strong>최종훈</strong>)<br>최종훈 · 박선영</p><p class="rt">종훈님 집 <strong>08:00</strong> 출발 → 선영님 집 <strong>08:40</strong> → <strong>09:30</strong> 양평 만남의 광장 휴게소</p></div>
       </article>
       <article class="ncard rv">
         <svg viewBox="0 0 48 48"><path d="M24 43s14-12.5 14-23a14 14 0 0 0-28 0c0 10.5 14 23 14 23z"/><circle cx="24" cy="20" r="5"/></svg>
         <h3>집결지</h3>
-        <div class="car"><b>출발 · 11/12 (목) 08:00</b><p>본부 팀은 본부에서 차량 1, 시흥 팀은 시흥에서 차량 2로 출발해요.</p></div>
+        <div class="car"><b>출발 · 11/12 (목) 08:00</b><p>차량 2는 08:00 종훈님 집에서 출발(08:40 선영님 집 경유), 차량 1은 본부에서 08:10 집결 후 08:20 출발해요.</p></div>
+        <div class="car"><b>합류 · 11/12 (목) 09:30</b><p>두 차량이 양평 만남의 광장 휴게소에서 만나, 함께 횡성으로 이동해요.</p></div>
         <div class="car"><b>귀가 · 11/13 (금) 14:30</b><p>횡성에서 출발해서 본부와 시흥에 각각 도착해요.</p></div>
       </article>
     </div>
