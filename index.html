@@ -10,7 +10,7 @@ try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(loca
 <script>
 /* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
    Bump SITE_VERSION here AND in version.json on every publish. */
-(function(){var SITE_VERSION='20261026f';
+(function(){var SITE_VERSION='20261103a';
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.v||j.v===SITE_VERSION)return;
   var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
@@ -425,6 +425,40 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
   .ncards{grid-template-columns:repeat(3,1fr);margin-top:28px}
   .ncards.n2{margin-top:12px}
 }
+
+/* ─────────────  문구 편집 모드  ───────────── */
+.ed-open,.ed-bar button{font:inherit;font-size:12px;font-weight:600;letter-spacing:-.01em;border:0;cursor:pointer;border-radius:var(--r-pill);transition:transform .15s}
+.ed-open{position:fixed;z-index:45;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));color:#fff;background:rgba(0,102,204,.92);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);padding:9px 14px}
+.ed-open:active,.ed-bar button:active{transform:scale(.95)}
+.ed-bar{position:fixed;z-index:60;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:none;max-width:calc(100vw - 24px);width:max-content;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;padding:8px 10px;background:rgba(29,29,31,.92);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-radius:22px;color:#fff;font-size:12px;box-shadow:0 8px 30px rgba(0,0,0,.28)}
+.ed-bar .msg{flex:1 0 100%;text-align:center;color:#d2d2d7;padding:0 6px 2px}
+.ed-bar button{color:#fff;background:rgba(255,255,255,.14);padding:8px 13px}
+.ed-bar button.pri{background:var(--primary)}
+.ed-bar button[hidden]{display:none}
+.ed-toast{position:fixed;z-index:70;left:50%;top:60px;transform:translate(-50%,-8px);opacity:0;pointer-events:none;background:#1d1d1f;color:#fff;font-size:13px;font-weight:600;padding:10px 16px;border-radius:var(--r-pill);transition:opacity .25s,transform .25s;max-width:calc(100vw - 24px);text-align:center}
+.ed-toast.on{opacity:1;transform:translate(-50%,0)}
+.ed-modal{position:fixed;z-index:80;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px}
+.ed-modal.on{display:flex}
+.ed-modal .box{background:#fff;color:var(--ink);border-radius:var(--r-lg);padding:20px;width:min(560px,100%)}
+.ed-modal h4{font-size:17px;margin-bottom:6px}
+.ed-modal p{font-size:13px;color:var(--ink-48);margin-bottom:10px}
+.ed-modal textarea{width:100%;height:180px;border:1px solid var(--hairline);border-radius:var(--r-sm);padding:10px;font:12px/1.5 ui-monospace,Consolas,monospace;resize:vertical;word-break:break-all}
+.ed-modal .row{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.ed-modal .row button{font:inherit;font-size:14px;font-weight:600;border:0;border-radius:var(--r-pill);padding:10px 18px;cursor:pointer;background:#e8e8ed;color:var(--ink)}
+.ed-modal .row button.pri{background:var(--primary);color:#fff}
+html.ed-on .ed-open,html.ed-on .motion-toggle{display:none}
+html.ed-on .ed-bar{display:flex}
+html.ed-on .pops{display:none}
+html.ed-on.js .rv{opacity:1;transform:none;transition:none}
+html.ed-on .edt{cursor:text;outline:1.5px dashed rgba(41,151,255,.75);outline-offset:3px;border-radius:3px}
+html.ed-on .edt:hover{background:rgba(41,151,255,.14)}
+html.ed-on .edt::after{content:"✎";display:inline-block;vertical-align:middle;margin-left:6px;width:22px;height:22px;border-radius:50%;background:#0066cc;color:#fff;font:600 12px/22px var(--font);font-style:normal;font-weight:600;letter-spacing:0;text-transform:none;text-align:center;text-indent:0;white-space:nowrap;text-shadow:none}
+html.ed-on .edt.edt-mod::after{background:#1f9d55}
+html.ed-on .edt.editing{outline:2px solid #2997ff;background:rgba(41,151,255,.18)}
+html.ed-on .edt.editing::after{display:none}
+html.ed-on .gnav .edt::after{width:14px;height:14px;font-size:9px;line-height:14px;margin-left:3px}
+html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:16px;margin-left:4px}
+@media print{.ed-open,.ed-bar,.ed-toast,.ed-modal{display:none!important}}
 </style>
 </head>
 <body>
@@ -884,6 +918,25 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
 
 <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false">움직임 끄기</button>
 
+<button class="ed-open" id="edOpen" type="button">✎ 문구 편집</button>
+<div class="ed-bar" id="edBar" role="toolbar" aria-label="문구 편집">
+  <div class="msg" id="edMsg">고치고 싶은 문구를 누르세요 · Enter 저장 · Esc 취소 · Shift+Enter 줄바꿈</div>
+  <button class="pri" id="edDone" type="button">✓ 편집 끝내기</button>
+  <button id="edRevert" type="button" hidden>↺ 이 문구 원래대로</button>
+  <button id="edCopy" type="button">📋 수정 내용 복사</button>
+  <button id="edLoad" type="button">📥 불러오기</button>
+  <button id="edReset" type="button">전체 초기화</button>
+</div>
+<div class="ed-toast" id="edToast" role="status" aria-live="polite"></div>
+<div class="ed-modal" id="edModal">
+  <div class="box">
+    <h4>수정 내용 불러오기</h4>
+    <p>'수정 내용 복사'로 복사해 둔 내용을 아래에 붙여 넣고 [적용]을 누르세요.</p>
+    <textarea id="edText" spellcheck="false" placeholder='{"v":1,"edits":[…]}'></textarea>
+    <div class="row"><button id="edModalNo" type="button">취소</button><button class="pri" id="edModalOk" type="button">적용</button></div>
+  </div>
+</div>
+
 <script src="assets/lenis.min.js"></script>
 <script>
 /* smooth scroll + scroll-linked motion + floating stickers */
@@ -1160,6 +1213,162 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
     var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('on')});map[e.target.id].classList.add('on')}})},{rootMargin:'-45% 0px -50% 0px'});
     secs.forEach(function(s){so.observe(s)});
   }
+})();
+</script>
+<script>
+/* 문구 편집 — 문구를 눌러 고치면 이 브라우저(localStorage)에 저장된다.
+   edits.json 이 있으면 모든 방문자에게 공통으로 먼저 적용된다(내 수정이 그 위에 덮어씀).
+   저장 형식: {v:1, edits:[{i:문구 순번, o:원래 HTML, h:바뀐 HTML}]} — 순번이 어긋나도 원래 문구(o)로 다시 찾는다. */
+(function(){
+  var KEY='gipa-edits-v1', root=document.documentElement;
+  var INL={B:1,STRONG:1,EM:1,I:1,SMALL:1,BR:1}, SKIP={SCRIPT:1,STYLE:1,svg:1,SVG:1,BUTTON:1,IMG:1,NOSCRIPT:1,TEXTAREA:1};
+  var units=[], orig=[], localMap={}, sharedMap={}, cur=null, skipped=0, tt=0;
+  var $=function(id){return document.getElementById(id)};
+  var bar=$('edBar'), revertBtn=$('edRevert'), toastEl=$('edToast'), modal=$('edModal');
+
+  function blank(s){return !s||!s.replace(/[\s ]+/g,'')}
+  function inlineOnly(el){
+    for(var c=el.firstElementChild;c;c=c.nextElementSibling){
+      if(!INL[c.tagName]||c.hasAttribute('class'))return false;
+      if(c.firstElementChild&&!inlineOnly(c))return false;
+    }
+    return true;
+  }
+  /* 문구 단위 찾기: 글자만(또는 b·em·br 같은 꾸밈만) 든 요소 = 1칸. 섞여 있으면 안쪽으로 내려가고, 맨 글자는 span으로 감싼다. */
+  function walk(el){
+    if(SKIP[el.tagName]||el.getAttribute('aria-hidden')==='true'||blank(el.textContent))return;
+    if(inlineOnly(el)){units.push(el);return}
+    [].slice.call(el.childNodes).forEach(function(n){
+      if(n.nodeType===1)walk(n);
+      else if(n.nodeType===3&&!blank(n.nodeValue)){
+        var s=document.createElement('span');s.className='edt-w';el.replaceChild(s,n);s.appendChild(n);units.push(s);
+      }
+    });
+  }
+  ['header.gnav','main','footer'].forEach(function(q){var e=document.querySelector(q);if(e)walk(e)});
+  units.forEach(function(u,i){orig[i]=u.innerHTML;u._i=i;u.classList.add('edt')});
+
+  function eff(i){return i in localMap?localMap[i]:(i in sharedMap?sharedMap[i]:orig[i])}
+  function render(i){
+    var u=units[i],h=eff(i);
+    if(u.innerHTML!==h)u.innerHTML=h;
+    u.classList.toggle('edt-mod',h!==orig[i]);
+  }
+  function renderAll(){units.forEach(function(u,i){if(u!==cur)render(i)})}
+  function resolve(list){
+    var out={};
+    (list||[]).forEach(function(e){
+      if(!e||typeof e.h!=='string'||typeof e.o!=='string'){skipped++;return}
+      var i=+e.i;
+      if(!(units[i]&&orig[i]===e.o)){
+        var m=[];orig.forEach(function(o,j){if(o===e.o)m.push(j)});
+        i=m.length===1?m[0]:-1;
+      }
+      if(i>=0)out[i]=e.h;else skipped++;
+    });
+    return out;
+  }
+  function listOf(map){return Object.keys(map).map(function(k){return {i:+k,o:orig[k],h:map[k]}})}
+  function changed(){var l=[];units.forEach(function(u,i){var h=eff(i);if(h!==orig[i])l.push({i:i,o:orig[i],h:h})});return l}
+  function persist(){try{localStorage.setItem(KEY,JSON.stringify({v:1,edits:listOf(localMap)}))}catch(e){}}
+  function toast(t){toastEl.textContent=t;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove('on')},2400)}
+
+  /* 저장된 수정 불러오기: 먼저 이 브라우저 것, 이어서 공통(edits.json) */
+  try{var raw=localStorage.getItem(KEY);if(raw){var j=JSON.parse(raw);localMap=resolve(j&&j.edits)}}catch(e){}
+  renderAll();
+  try{fetch('edits.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
+    if(!j||!j.edits)return;sharedMap=resolve(j.edits);renderAll();
+  }).catch(function(){})}catch(e){}
+
+  /* 문구 하나 편집 */
+  function caretEnd(el){var r=document.createRange();r.selectNodeContents(el);r.collapse(false);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+  function start(el){
+    if(cur===el)return;if(cur)end(true);
+    cur=el;el._before=el.innerHTML;el.classList.add('editing');el.setAttribute('contenteditable','true');el.spellcheck=false;
+    try{el.focus({preventScroll:true})}catch(e){el.focus()}
+    caretEnd(el);revertBtn.hidden=false;
+  }
+  function clean(el){
+    [].slice.call(el.querySelectorAll('*')).forEach(function(n){
+      if(!n.parentNode)return;
+      if(INL[n.tagName]){[].slice.call(n.attributes).forEach(function(a){if(/^on/i.test(a.name))n.removeAttribute(a.name)});return}
+      while(n.firstChild)n.parentNode.insertBefore(n.firstChild,n);
+      n.parentNode.removeChild(n);
+    });
+  }
+  function end(save){
+    var el=cur;if(!el)return;cur=null;
+    el.removeAttribute('contenteditable');el.classList.remove('editing');revertBtn.hidden=true;
+    var i=el._i;
+    if(save){
+      clean(el);
+      var h=el.innerHTML.replace(/(<br\s*\/?>\s*)+$/i,'');
+      if(blank(el.textContent))h=el._before;
+      if(h!==el._before){localMap[i]=h;persist();toast('저장했어요')}
+    }
+    render(i);
+  }
+  $('edRevert').addEventListener('click',function(){
+    if(!cur)return;var i=cur._i;localMap[i]=orig[i];persist();
+    var el=cur;cur=null;el.removeAttribute('contenteditable');el.classList.remove('editing');revertBtn.hidden=true;
+    el.innerHTML=orig[i];render(i);toast('원래 문구로 되돌렸어요');
+  });
+
+  /* 모드 켜기/끄기 */
+  $('edOpen').addEventListener('click',function(){root.classList.add('ed-on');toast('고치고 싶은 문구를 눌러 보세요')});
+  $('edDone').addEventListener('click',function(){end(true);root.classList.remove('ed-on')});
+  bar.addEventListener('mousedown',function(e){e.preventDefault()}); /* 버튼을 눌러도 편집 중인 문구가 포커스를 잃지 않게 */
+
+  document.addEventListener('click',function(e){
+    if(!root.classList.contains('ed-on'))return;
+    var t=e.target;if(!t.closest||t.closest('.ed-bar,.ed-modal'))return;
+    if(t.closest('a'))e.preventDefault();
+    var u=t.closest('.edt');
+    if(u&&u!==cur){e.preventDefault();e.stopPropagation();start(u)}
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(!cur||e.isComposing||e.keyCode===229)return;
+    if(e.key==='Enter'){e.preventDefault();if(e.shiftKey)document.execCommand('insertLineBreak');else end(true)}
+    else if(e.key==='Escape'){e.preventDefault();end(false)}
+  });
+  document.addEventListener('focusout',function(e){
+    var el=e.target;if(el!==cur)return;
+    setTimeout(function(){if(cur===el&&document.activeElement!==el)end(true)},0);
+  });
+  document.addEventListener('paste',function(e){
+    if(!cur||!cur.contains(e.target))return;
+    e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\s*[\r\n]+\s*/g,' ');
+    document.execCommand('insertText',false,t);
+  });
+  document.addEventListener('drop',function(e){if(cur&&cur.contains(e.target))e.preventDefault()});
+
+  /* 복사 · 불러오기 · 초기화 */
+  function copyText(t){
+    if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);
+    return new Promise(function(ok,no){
+      var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();
+      var r=false;try{r=document.execCommand('copy')}catch(x){}document.body.removeChild(a);r?ok():no();
+    });
+  }
+  $('edCopy').addEventListener('click',function(){
+    end(true);var l=changed();
+    if(!l.length){toast('아직 고친 문구가 없어요');return}
+    var t=JSON.stringify({v:1,edits:l});
+    copyText(t).then(function(){toast('수정 '+l.length+'건을 복사했어요')}).catch(function(){$('edText').value=t;modal.classList.add('on');toast('복사가 막혀 있어요. 아래 내용을 직접 복사하세요')});
+  });
+  $('edLoad').addEventListener('click',function(){end(true);$('edText').value='';modal.classList.add('on');$('edText').focus()});
+  $('edModalNo').addEventListener('click',function(){modal.classList.remove('on')});
+  $('edModalOk').addEventListener('click',function(){
+    var j;try{j=JSON.parse($('edText').value)}catch(e){toast('내용 형식이 맞지 않아요');return}
+    skipped=0;var m=resolve(j&&j.edits),n=0;
+    Object.keys(m).forEach(function(k){localMap[k]=m[k];n++});
+    persist();renderAll();modal.classList.remove('on');
+    toast(n+'건 적용'+(skipped?' · '+skipped+'건은 문구가 달라 건너뜀':''));
+  });
+  $('edReset').addEventListener('click',function(){
+    end(true);if(!confirm('이 브라우저에 저장된 수정을 모두 지우고 처음 문구로 돌릴까요?'))return;
+    localMap={};persist();renderAll();toast('처음 문구로 돌렸어요');
+  });
 })();
 </script>
 </body>
