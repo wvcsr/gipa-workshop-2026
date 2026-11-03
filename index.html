@@ -10,7 +10,7 @@ try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(loca
 <script>
 /* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
    Bump SITE_VERSION here AND in version.json on every publish. */
-(function(){var SITE_VERSION='20261103d';
+(function(){var SITE_VERSION='20261103f';
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.v||j.v===SITE_VERSION)return;
   var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
@@ -741,7 +741,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
           <p>이기는 사람보다 웃는 사람이 많은 밤. 프로그램은 이렇게 진행돼요.</p>
           <ul class="prog">
             <li><b>선물뽑기</b><span>15분</span></li>
-            <li><b>퀴즈</b><span>30분</span></li>
+            <li><b>레크리에이션 게임</b><span>30분</span></li>
             <li><b>보드게임</b><span>60분</span></li>
           </ul>
         </div>
@@ -877,7 +877,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
           <li><time>15:20</time><span class="th"><img src="assets/taipei-in.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>카페 (택 1)</b><span>타이페이909 · 호수길133 · 코티지생운 <em class="chg">시간 변경</em></span></div></li>
           <li><time>17:00</time><span class="th"><img src="assets/pension-day.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>숙소 체크인 · 정비</b><span>호숫길펜션 구방리518 <em class="chg">시간 변경</em></span></div></li>
           <li><time>18:00</time><span class="th"><img src="assets/pension-tent.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>저녁 · 바베큐</b><span>숙소</span></div></li>
-          <li><time>20:00</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.5 2.2 2 3.5 2s2.5-.5 3.5-2M9 9.5h.01M15 9.5h.01"/></svg></span><div><b>레크리에이션</b><span>선물뽑기 · 퀴즈 · 보드게임</span></div></li>
+          <li><time>20:00</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.5 2.2 2 3.5 2s2.5-.5 3.5-2M9 9.5h.01M15 9.5h.01"/></svg></span><div><b>레크리에이션</b><span>선물뽑기 · 레크리에이션 게임 · 보드게임</span></div></li>
           <li><time>22:30</time><span class="th"><img src="assets/pension-fire.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>취침 · 자유시간</b><span>불멍</span></div></li>
         </ol>
       </div>
@@ -1127,6 +1127,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
     bolt:'<svg class="ic" viewBox="0 0 64 64"><path d="M38 3L12 36h15l-6 25 31-37H36z" fill="#ffd84d"/><path d="M4 22h10M2 32h8M6 42h8" stroke="#8fd0ff" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg>',
     helmet:'<svg class="ic" viewBox="0 0 64 64"><path d="M6 40a26 26 0 0 1 52 0v8H6z" fill="#ff9d4d"/><path d="M30 14h4v34h-4z" fill="#fff" opacity=".85"/><rect x="12" y="38" width="42" height="12" rx="6" fill="#1d1d1f"/><path d="M18 42h14" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/><path d="M12 22q4-8 14-10" stroke="#ffd2a8" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>',
     cart:'<svg class="ic" viewBox="0 0 64 64"><path d="M4 8h9l9 34h28" fill="none" stroke="#1d1d1f" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 16h43l-6 22H21z" fill="#8fe6c9"/><path d="M26 16l3 22M38 16l1 22M48 16l-3 22" stroke="#5fc8a6" stroke-width="2" fill="none"/><circle cx="26" cy="53" r="5" fill="#1d1d1f"/><circle cx="46" cy="53" r="5" fill="#1d1d1f"/></svg>',
+    basket:'<svg class="ic" viewBox="0 0 64 64"><path d="M20 26c0-12 24-12 24 0" fill="none" stroke="#1d1d1f" stroke-width="4" stroke-linecap="round"/><circle cx="26" cy="14" r="6" fill="#ff7a7a"/><path d="M26 8q2-4 5-4" fill="none" stroke="#6fcf97" stroke-width="2.6" stroke-linecap="round"/><rect x="36" y="3" width="9" height="17" rx="3.5" fill="#ffd84d" transform="rotate(14 40 12)"/><path d="M6 26h52l-6 28q-1 4-5 4H17q-4 0-5-4z" fill="#8fe6c9"/><path d="M22 26l2 32M32 26v32M42 26l-2 32M9 38h46M11 48h42" stroke="#5fc8a6" stroke-width="2" fill="none"/><path d="M4 26h56" stroke="#1d1d1f" stroke-width="4.5" stroke-linecap="round"/></svg>',
     boba:'<svg class="ic" viewBox="0 0 64 64"><rect x="36" y="1" width="5" height="22" rx="2.5" transform="rotate(14 38 12)" fill="#ff7aa8"/><path d="M14 22h36l-4 36H18z" fill="#f1d3ad"/><path d="M16 30h32l-1 8H17z" fill="#e3b887"/><rect x="11" y="16" width="42" height="8" rx="4" fill="#fff"/><circle cx="25" cy="52" r="3.4" fill="#3b2a20"/><circle cx="33" cy="54" r="3.4" fill="#3b2a20"/><circle cx="41" cy="52" r="3.4" fill="#3b2a20"/><circle cx="29" cy="47" r="3.4" fill="#3b2a20"/><circle cx="37" cy="47" r="3.4" fill="#3b2a20"/></svg>',
     coffee:'<svg class="ic" viewBox="0 0 64 64"><path d="M20 20q-4-5 0-10M30 20q-4-5 0-10M40 20q-4-5 0-10" fill="none" stroke="#bfe3ff" stroke-width="3.5" stroke-linecap="round"/><path d="M46 30h4a7 7 0 0 1 0 14h-6" fill="none" stroke="#ffb877" stroke-width="4.5" stroke-linecap="round"/><path d="M10 26h38v16a16 16 0 0 1-16 16h-6A16 16 0 0 1 10 42z" fill="#fff"/><ellipse cx="29" cy="26" rx="19" ry="4.5" fill="#8b5a3c"/><ellipse cx="29" cy="59" rx="26" ry="4" fill="#ffb877"/></svg>',
     house:'<svg class="ic" viewBox="0 0 64 64"><path d="M4 32L32 8l28 24z" fill="#ff9d9d"/><rect x="12" y="32" width="40" height="26" fill="#fff4d6"/><rect x="26" y="40" width="12" height="18" rx="2" fill="#ffb877"/><rect x="15" y="37" width="8" height="8" rx="1.5" fill="#8fd0ff"/><rect x="41" y="37" width="8" height="8" rx="1.5" fill="#8fd0ff"/><rect x="42" y="12" width="7" height="14" fill="#c97b5a"/></svg>',
@@ -1155,7 +1156,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
     'luge-hero':{ic:'bolt',t:'슝~ 도파민 ON',c:'#ffd84d',r:-6},
     'luge-ride':{ic:'helmet',t:'꺄아악~ 찢었다',c:'#ff9d4d',r:5},
     'luge-line':{ic:'flag',t:'누가 1등? 중꺾마',c:'#8fd0ff',r:-4},
-    'mart-out':{ic:'cart',t:'장바구니 플렉스',c:'#8fe6c9',r:4},
+    'mart-out':{ic:'basket',t:'필요한 것만 쏙쏙',c:'#8fe6c9',r:4},
     'taipei-in':{ic:'boba',t:'쪼르륵~ 당 충전',c:'#ffb3d9',r:-5},
     'hosu133-garden':{ic:'flower',t:'살랑살랑 꾸안꾸',c:'#ffb3d9',r:5},
     'cottage-out':{ic:'coffee',t:'모락모락 커피각',c:'#ffb877',r:-4},
