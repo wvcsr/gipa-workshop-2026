@@ -10,7 +10,7 @@ try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(loca
 <script>
 /* auto-update: compare this page's version with version.json (never cached); if the site was updated, reload once with a fresh URL.
    Bump SITE_VERSION here AND in version.json on every publish. */
-(function(){var SITE_VERSION='20261103b';
+(function(){var SITE_VERSION='20261103d';
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.v||j.v===SITE_VERSION)return;
   var k='gipa-reloaded-'+j.v; if(sessionStorage.getItem(k))return; sessionStorage.setItem(k,'1');
@@ -435,6 +435,29 @@ html.no-motion .dayhead .big{transform:none!important;opacity:1!important}
 .rsv{display:inline-flex;align-items:center;gap:7px;margin-top:18px;background:#30d158;color:#05230f;border-radius:var(--r-pill);padding:8px 18px 8px 12px;font-size:15px;font-weight:700;letter-spacing:-.01em}
 .rsv svg{width:18px;height:18px;stroke:#05230f;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .ncard .car p.rt{font-size:14px;font-weight:500;color:var(--ink);margin-top:8px;padding:8px 10px;background:var(--parchment);border-radius:10px}
+/* 랜덤 선물 · 단체 티셔츠 장식 */
+.ncard .nart{position:relative;margin-top:auto;border-radius:18px;overflow:hidden}
+.ncard .nart+.nart{margin-top:12px}
+.ncard p.big:has(~ .nart){margin-bottom:20px}
+.gifts{height:150px;background:linear-gradient(135deg,#fff3ec 0%,#f6f0ff 55%,#eaf6ff 100%)}
+.gifts .e{position:absolute;line-height:1;user-select:none;animation:gfloat 3.6s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+.gifts .e.main{left:50%;top:50%;font-size:64px;margin:-36px 0 0 -34px;animation:gwiggle 2.6s ease-in-out infinite;filter:drop-shadow(0 8px 10px rgba(0,0,0,.14))}
+.gifts .q{position:absolute;left:50%;top:14px;margin-left:12px;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:15px;font-weight:700;display:grid;place-items:center;animation:gpop 2.6s ease-in-out infinite}
+.gifts .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--c);opacity:.8;animation:gtwinkle 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes gfloat{from{transform:translateY(5px) rotate(-6deg)}to{transform:translateY(-8px) rotate(6deg)}}
+@keyframes gwiggle{0%,100%{transform:rotate(0) scale(1)}12%{transform:rotate(-9deg) scale(1.06)}24%{transform:rotate(8deg) scale(1.06)}36%{transform:rotate(-5deg) scale(1.03)}48%{transform:rotate(0) scale(1)}}
+@keyframes gpop{0%,40%,100%{transform:scale(1)}20%{transform:scale(1.25)}}
+@keyframes gtwinkle{0%,100%{transform:scale(.4);opacity:.25}50%{transform:scale(1.2);opacity:.95}}
+.tee-stage{height:190px;background:linear-gradient(180deg,#f5f5f7 0%,#e8e9ec 100%);display:grid;place-items:center}
+.tee-stage .tee{width:150px;transform-origin:50% 8%;animation:teesway 3.8s ease-in-out infinite}
+.ncard svg.tee-svg{width:100%;height:auto;stroke:none;fill:none;stroke-width:1;display:block;overflow:visible;filter:drop-shadow(0 10px 8px rgba(0,0,0,.16))}
+.tee-stage .shine{animation:teeshine 3.8s ease-in-out infinite}
+.tee-stage .sp{position:absolute;color:#fff;text-shadow:0 0 6px rgba(120,120,130,.6);font-size:16px;animation:gtwinkle 2.2s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes teesway{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-4px)}}
+@keyframes teeshine{0%,25%{transform:translateX(-120px)}70%,100%{transform:translateX(260px)}}
+.ncard .chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 20px}
+.ncard .chips span{font-size:12.5px;font-weight:600;color:var(--ink-80);background:var(--parchment);padding:4px 10px;border-radius:var(--r-pill)}
+html.no-motion .gifts .e,html.no-motion .gifts .q,html.no-motion .gifts .dot,html.no-motion .tee-stage .tee,html.no-motion .tee-stage .shine,html.no-motion .tee-stage .sp{animation:none}
 
 /* ─────────────  문구 편집 모드  ───────────── */
 .ed-open,.ed-bar button{font:inherit;font-size:12px;font-weight:600;letter-spacing:-.01em;border:0;cursor:pointer;border-radius:var(--r-pill);transition:transform .15s}
@@ -548,7 +571,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
 <!-- 이동 -->
 <section class="tile parch slim">
   <div class="strip s4 rv">
-    <div class="s"><div class="t">08:00</div><div class="n">차량 2 출발</div><div class="d">종훈님 집 → 선영님 집 → 휴게소</div></div>
+    <div class="s"><div class="t">06:30</div><div class="n">차량 2 출발</div><div class="d">유호성님 집 → 종훈님 집 08:00 → 선영님 집 08:40</div></div>
     <div class="s"><div class="t">08:10 – 08:20</div><div class="n">차량 1 본부 출발</div><div class="d">08:10 집결 → 08:20 출발</div></div>
     <div class="s"><div class="t">09:30</div><div class="n">양평 휴게소 합류</div><div class="d">만남의 광장 · 이후 함께 횡성으로</div></div>
     <div class="s"><div class="t">ARRIVE</div><div class="n">강원 횡성</div><div class="d">창밖 풍경이 달라지는 순간</div></div>
@@ -846,7 +869,7 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
       <div class="d rv">
         <h3>DAY 1 <small>11.12 (목)</small></h3>
         <ol>
-          <li><time>08:00</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16l1.5-5h11L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5"/></svg></span><div><b>횡성으로 이동</b><span>차량 2 08:00 · 차량 1 08:20 출발 → 09:30 양평 휴게소 합류</span></div></li>
+          <li><time>06:30</time><span class="th no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16l1.5-5h11L19 16M4 16h16v3H4zM7 19v1.5M17 19v1.5"/></svg></span><div><b>횡성으로 이동</b><span>차량 2 06:30 · 차량 1 08:20 출발 → 09:30 양평 휴게소 합류</span></div></li>
           <li><time>11:00</time><span class="th"><img src="assets/pungsuwon-out.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>풍수원성당</b><span>팀빌딩</span></div></li>
           <li><time>12:30</time><span class="th"><img src="assets/jieun-tofu.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>점심 · 지은네식당</b><span>돌솥두부정식 <em class="rsvm">예약 완료</em></span></div></li>
           <li><time>13:40</time><span class="th"><img src="assets/luge-hero.jpg?v=20261026b" alt="" loading="lazy"></span><div><b>횡성루지체험장</b><span>팀빌딩 · 루지 2회</span></div></li>
@@ -894,11 +917,42 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
         <svg viewBox="0 0 48 48"><path d="M17 8l-10 6 4 9 5-2v21h16V21l5 2 4-9-10-6c-1 3-3.5 5-7 5s-6-2-7-5z"/></svg>
         <h3>의상</h3>
         <p class="big">팀 단체 티셔츠!<br>(노페)</p>
+        <div class="chips"><span>그레이</span><span>반팔</span><span>노스페이스</span></div>
+        <div class="nart tee-stage" aria-hidden="true">
+          <span class="sp" style="left:20%;top:22%;--d:0s">✦</span><span class="sp" style="right:18%;top:30%;--d:.8s">✧</span><span class="sp" style="right:28%;bottom:16%;--d:1.4s">✦</span>
+          <div class="tee">
+            <svg class="tee-svg" viewBox="0 0 200 180">
+              <defs>
+                <linearGradient id="teeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9ccd0"/><stop offset="1" stop-color="#a9adb3"/></linearGradient>
+                <linearGradient id="teeS" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+                <clipPath id="teeC"><path id="teeP" d="M60 20L20 42l16 40 22-10v88q0 4 4 4h76q4 0 4-4V72l22 10 16-40-40-22Q124 36 100 36T60 20z"/></clipPath>
+              </defs>
+              <path d="M60 20L20 42l16 40 22-10v88q0 4 4 4h76q4 0 4-4V72l22 10 16-40-40-22Q124 36 100 36T60 20z" fill="url(#teeG)"/>
+              <path d="M60 20Q50 46 58 72M140 20Q150 46 142 72" stroke="#8f949a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <path d="M70 70Q76 110 70 150M130 70Q124 110 130 150" stroke="#fff" stroke-opacity=".28" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M58 152h84" stroke="#8f949a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <path d="M62 21Q100 52 138 21" stroke="#8a8f95" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <g clip-path="url(#teeC)"><rect class="shine" x="-30" y="0" width="46" height="180" fill="url(#teeS)" transform="skewX(-18)"/></g>
+            </svg>
+          </div>
+        </div>
       </article>
       <article class="ncard rv">
         <svg viewBox="0 0 48 48"><rect x="6" y="17" width="36" height="9" rx="2"/><path d="M9 26h30v16H9zM24 17v25M24 17c-3-9-12-9-12-4 0 3 6 4 12 4zM24 17c3-9 12-9 12-4 0 3-6 4-12 4z"/></svg>
         <h3>랜덤 선물 준비</h3>
         <p class="big">개인당 1만원 상당의<br>선물 랜덤 준비!</p>
+        <div class="nart gifts" aria-hidden="true">
+          <span class="dot" style="left:10%;top:24%;--c:#ff5515;--d:0s"></span><span class="dot" style="left:84%;top:62%;--c:#5b8def;--d:.6s"></span><span class="dot" style="left:30%;top:80%;--c:#f2b705;--d:1.1s"></span><span class="dot" style="left:70%;top:14%;--c:#e0559a;--d:1.6s"></span><span class="dot" style="left:92%;top:30%;--c:#2fbf8f;--d:.3s"></span><span class="dot" style="left:46%;top:88%;--c:#ff5515;--d:1.9s"></span>
+          <span class="e" style="left:8%;top:44%;font-size:30px;--d:.2s">🎀</span>
+          <span class="e" style="left:21%;top:10%;font-size:26px;--d:1s">🎈</span>
+          <span class="e" style="left:21%;top:62%;font-size:28px;--d:.5s">🧸</span>
+          <span class="e main">🎁</span><span class="q">?</span>
+          <span class="e" style="right:22%;top:12%;font-size:28px;--d:.8s">🎉</span>
+          <span class="e" style="right:20%;top:60%;font-size:26px;--d:1.4s">🍫</span>
+          <span class="e" style="right:7%;top:38%;font-size:30px;--d:.1s">💝</span>
+          <span class="e" style="left:42%;top:4%;font-size:18px;--d:1.7s">✨</span>
+          <span class="e" style="right:36%;bottom:6%;font-size:18px;--d:.4s">✨</span>
+        </div>
       </article>
     </div>
     <div class="ncards n2">
@@ -906,12 +960,12 @@ html.ed-on .chipc.edt::after{width:16px;height:16px;font-size:10px;line-height:1
         <svg viewBox="0 0 48 48"><path d="M8 28l3-10c.5-2 2-3 4-3h18c2 0 3.5 1 4 3l3 10"/><rect x="5" y="28" width="38" height="9" rx="3"/><path d="M11 37v4M37 37v4M12 32.5h.01M36 32.5h.01"/></svg>
         <h3>차량</h3>
         <div class="car"><b>차량 1 · 6697</b><span>본부 출발</span><p>운전 <strong>황병욱</strong> (귀가도 동일)<br>백진 · 박소진 · 윤새롬 · 강안나 · 이상혁 · 김민지</p><p class="rt">본부 <strong>08:10</strong> 집결 → <strong>08:20</strong> 출발 → <strong>09:30</strong> 양평 만남의 광장 휴게소</p></div>
-        <div class="car"><b>차량 2 · 6698</b><span>종훈님 집 출발</span><p>운전 <strong>유호성</strong> (귀가는 <strong>최종훈</strong>)<br>최종훈 · 박선영</p><p class="rt">종훈님 집 <strong>08:00</strong> 출발 → 선영님 집 <strong>08:40</strong> → <strong>09:30</strong> 양평 만남의 광장 휴게소</p></div>
+        <div class="car"><b>차량 2 · 6698</b><span>유호성님 집 출발</span><p>운전 <strong>유호성</strong> (귀가는 <strong>최종훈</strong>)<br>최종훈 · 박선영</p><p class="rt">유호성님 집 <strong>06:30</strong> 출발 → 종훈님 집 <strong>08:00</strong> → 선영님 집 <strong>08:40</strong> → <strong>09:30</strong> 양평 만남의 광장 휴게소</p></div>
       </article>
       <article class="ncard rv">
         <svg viewBox="0 0 48 48"><path d="M24 43s14-12.5 14-23a14 14 0 0 0-28 0c0 10.5 14 23 14 23z"/><circle cx="24" cy="20" r="5"/></svg>
         <h3>집결지</h3>
-        <div class="car"><b>출발 · 11/12 (목) 08:00</b><p>차량 2는 08:00 종훈님 집에서 출발(08:40 선영님 집 경유), 차량 1은 본부에서 08:10 집결 후 08:20 출발해요.</p></div>
+        <div class="car"><b>출발 · 11/12 (목) 06:30</b><p>차량 2는 06:30 유호성님 집에서 출발해 08:00 종훈님 집, 08:40 선영님 집을 차례로 들러요. 차량 1은 본부에서 08:10 집결 후 08:20 출발해요.</p></div>
         <div class="car"><b>합류 · 11/12 (목) 09:30</b><p>두 차량이 양평 만남의 광장 휴게소에서 만나, 함께 횡성으로 이동해요.</p></div>
         <div class="car"><b>귀가 · 11/13 (금) 14:30</b><p>횡성에서 출발해서 본부와 시흥에 각각 도착해요.</p></div>
       </article>
